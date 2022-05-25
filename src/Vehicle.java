@@ -1,8 +1,12 @@
 public abstract class Vehicle {
 
-  private string name;
+  private String name;
 
-  private enum type;
+  private enum type{
+    TREE_SPROUT,
+    MATURE_TREE,
+    CUT_TREE
+  };
 
   private int level;
 
@@ -18,13 +22,5 @@ public abstract class Vehicle {
   public void dropWood(int quantity) {
   }
 
-  public void newOperation() {
-  }
-
-  public void newOperation() {
-  }
-
-  public void newOperation() {
-  }
 
 }

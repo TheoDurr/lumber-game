@@ -1,10 +1,10 @@
-public class company {
+public class Company {
 
-  private string name;
+  private String name;
 
-  private string CEO;
+  private String CEO;
 
-  private string pays;
+  private String pays;
 
   private double cashFlow;
 
