@@ -11,9 +11,9 @@ public class Main {
         w.startWorking();
 
         //Since there are shared objects between these threads we need to be cautious 
-        //TO_IMPROVE
+        //TO_CHANGE
         try {
-            Thread.sleep(200);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

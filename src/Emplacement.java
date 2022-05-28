@@ -15,7 +15,7 @@ public class Emplacement {
     
     public Emplacement(EmplacementType t){
         isOccupied = false;
-        tree = new Tree(TreeState.MATURE);
+        tree = null;
         type = t;
     }
 
@@ -29,6 +29,10 @@ public class Emplacement {
 
     public Tree getTree(){
         return tree;
+    }
+
+    public EmplacementType getType(){
+        return type;
     }
 
     //Method to call when a worker arrives in this emplacement

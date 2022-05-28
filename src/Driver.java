@@ -1,8 +1,8 @@
-public class Driver extends Salarié {
+public class Driver extends Employee {
 
   private int speed;
 
-  public int drive(Vehicle vehicle, string destination) {
+  public int drive(Vehicle vehicle, String destination) {
   return 0;
   }
 

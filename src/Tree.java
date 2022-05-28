@@ -1,4 +1,5 @@
 public class Tree {
+
     private TreeState state;
 
     public Tree(){
@@ -11,6 +12,10 @@ public class Tree {
 
     public TreeState getState() {
         return state;
+    }
+
+    public void setState(TreeState st) {
+        state = st;
     }
 
     public void nextState(){

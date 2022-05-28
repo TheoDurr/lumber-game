@@ -21,11 +21,11 @@ public class Land {
 
     public Emplacement getEmplacementForWC(){
         for(Emplacement emp : emplacements){
-            if(!emp.isOccupied() && emp.hasTree() && emp.getTree().getState() == TreeState.MATURE){
+            if(!emp.isOccupied() && emp.getType()==EmplacementType.TREE && emp.hasTree() && emp.getTree().getState() == TreeState.MATURE){
                 return emp;
             }
         }
-        return null;
+        return getRestEmplacement();
     }
 
     public Emplacement getRestEmplacement(){

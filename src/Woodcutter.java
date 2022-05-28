@@ -1,12 +1,17 @@
+import java.util.Objects;
+
 public class Woodcutter extends Employee implements Runnable {
   private String name;
 
+  //Speed at which the woodcutter is cutting the tree
   private int speed;
 
   private int efficiency;
 
+  //Land on which the woodcutter work
   private Land land;
 
+  //Specific emplacement on which the woodcutter is either cutting a tree or waiting for work
   private Emplacement emplacement;
 
   public Woodcutter(String name, int speed, int efficiency){
@@ -17,6 +22,7 @@ public class Woodcutter extends Employee implements Runnable {
 
   public void setLand(Land l){
     land = l;
+    //By default the wc will go in the rest emplacement
     emplacement = l.getRestEmplacement();
   }
 
@@ -35,7 +41,7 @@ public class Woodcutter extends Employee implements Runnable {
   public void cutTree() {
     //We wait a certain amount of time depending on the speed of the worker
     try {
-        Thread.sleep(1000/speed);
+        Thread.sleep(5000/speed);
     } catch (InterruptedException e) {
         e.printStackTrace();
     }
@@ -56,13 +62,13 @@ public class Woodcutter extends Employee implements Runnable {
   public void run() {
     //The woodcutter will go on a free emplacement where there is a tree that can be cut
     setEmplacement(land.getEmplacementForWC());
-    
-    if(emplacement!=null){
+    while(emplacement.getType()==EmplacementType.TREE){
       cutTree();
+      setEmplacement(land.getEmplacementForWC());
     }
-    else{
-      System.out.printf("No emplacement with mature tree on it is free !");
-    }
+    
+    System.out.printf(name+" has no emplacement with mature tree on it and that is free !\n");
+    
     
   }
 
