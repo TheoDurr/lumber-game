@@ -1,5 +1,5 @@
 public abstract class Terrain {
 
-  public string name;
+  public String name;
 
 }

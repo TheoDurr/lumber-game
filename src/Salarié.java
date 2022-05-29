@@ -1,8 +1,8 @@
 public abstract class Salarié {
 
-  private string name;
+  private String name;
 
-  private string nationality;
+  private String nationality;
 
   private float salary;
 
