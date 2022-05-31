@@ -9,7 +9,7 @@ public class Driver extends Employee {
   private int speed;
 
 
-  public void drive(Vehicle vehicle, ) {
+  public void drive(Vehicle vehicle) {
     vehicle.retrieveWood(1, departureStock);
     vehicle.dropWood(1, destinationStock);
   }
