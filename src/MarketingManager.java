@@ -1,5 +1,8 @@
-public class MarketingManager extends Salarié {
+public class MarketingManager extends Employee {
 
   private Integer nbOfCustomersAttracted;
+  @Override
+  public void getSalary() {
 
+  }
 }

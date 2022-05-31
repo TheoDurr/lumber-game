@@ -1,11 +1,21 @@
-import vehiclePackage.Vehicle;
+import terrain.Stock;
+import vehicle.Vehicle;
 
-public class Driver extends Salarié {
+public class Driver extends Employee {
+
+  private Stock departureStock;
+  private Stock destinationStock;
 
   private int speed;
 
-  public int drive(Vehicle vehicle, String destination) {
-  return 0;
+
+  public void drive(Vehicle vehicle, ) {
+    vehicle.retrieveWood(1, departureStock);
+    vehicle.dropWood(1, destinationStock);
   }
 
+  @Override
+  public void getSalary() {
+
+  }
 }

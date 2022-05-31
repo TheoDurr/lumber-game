@@ -1,3 +1,5 @@
+import terrain.Factory;
+
 import java.util.List;
 
 public class Machine extends Factory {

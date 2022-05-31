@@ -1,4 +1,4 @@
-public class Woodcutter extends Salarié {
+public class Woodcutter extends Employee {
 
   private int speed;
 
@@ -7,4 +7,8 @@ public class Woodcutter extends Salarié {
   public void couperBois() {
   }
 
+  @Override
+  public void getSalary() {
+
+  }
 }

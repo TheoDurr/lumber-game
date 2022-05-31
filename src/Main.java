@@ -1,12 +1,17 @@
-import vehiclePackage.Truck;
-import vehiclePackage.Vehicle;
-import vehiclePackage.VehicleCategory;
+import terrain.Stock;
 
 public class Main {
     public static void main(String[] args) {
 
-        Vehicle testTruck = new Truck();
-        VehicleCategory forestToFactoryTrucks = new VehicleCategory(testTruck);
-        forestToFactoryTrucks.start();
+        Stock startingTestStock = new Stock();
+        Stock endingTestStock = new Stock();
+
+        startingTestStock.addWood(5);
+        endingTestStock.addWood(5);
+
+        Employee driver1 = new Driver();
+        EmployeeCategory drivers = new EmployeeCategory(driver1);
+        drivers.start();
+
     }
 }

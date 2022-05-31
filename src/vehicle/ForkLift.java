@@ -1,4 +1,4 @@
-package vehiclePackage;
+package vehicle;
 
 public class ForkLift {
 }

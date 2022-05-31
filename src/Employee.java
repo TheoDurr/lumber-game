@@ -1,4 +1,4 @@
-public abstract class Salarié {
+public abstract class Employee {
 
   private String name;
 
@@ -8,7 +8,6 @@ public abstract class Salarié {
 
   private int level;
 
-  public void getSalary() {
-  }
+  public abstract void getSalary();
 
 }
