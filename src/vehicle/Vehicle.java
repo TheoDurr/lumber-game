@@ -7,9 +7,9 @@ public abstract class Vehicle {
 
   protected int level;
 
-  protected int maxCapacity;
+  protected int content = 0;
 
-  protected int capacity;
+  protected int capacity = 1;
 
   protected float max_speed;
 

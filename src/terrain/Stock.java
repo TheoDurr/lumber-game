@@ -3,7 +3,7 @@ package terrain;
 public class Stock {
 
     private int maxCapacity = 20; //Need to be changed
-    private int currentCapacity;
+    private int currentCapacity = 0;
 
     public int getCurrentCapacity(){
         return currentCapacity;
@@ -22,9 +22,11 @@ public class Stock {
 
     public void addWood(int quantity){
         currentCapacity+=quantity;
+
+
     }
 
     public void removeWood(int quantity){
-        currentCapacity+=quantity;
+        currentCapacity-=quantity;
     }
 }

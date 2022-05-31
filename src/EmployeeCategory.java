@@ -5,18 +5,18 @@ import java.util.ArrayList;
 public class EmployeeCategory extends Thread{
 
     
-        private ArrayList<Employee> employees = new ArrayList<Employee>();
+        protected ArrayList<Employee> employees = new ArrayList<Employee>();
 
-        public EmployeeCategory(Employee employee){
-            employees.add(employee);
+
+        protected EmployeeCategory(){
         }
 
         @Override
         public void run() {
-            System.out.println("A");
-            System.out.println("B");
-
 
         }
 
+        public void addEmployee(Employee employee){
+            employees.add(employee);
+        }
 }
