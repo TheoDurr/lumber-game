@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
-        Woodcutter w = new Woodcutter("Creput", 2, 2);
-        Woodcutter w2 = new Woodcutter("Creut", 1, 2);
+        Woodcutter w = new Woodcutter("Fiher", 1, 2);
+        Woodcutter w2 = new Woodcutter("Creut", 4, 2);
         Land l = new Land();
 
         w.setLand(l);

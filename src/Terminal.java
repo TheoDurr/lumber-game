@@ -6,6 +6,7 @@ public abstract class Terminal {
 
   protected void refreshTerminal() {
   }
+/*
 
   protected void addDemand(Demand demand) {
   }
@@ -15,5 +16,7 @@ public abstract class Terminal {
 
   protected void completeDemand(Demand demand) {
   }
+
+*/
 
 }
