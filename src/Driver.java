@@ -26,8 +26,8 @@ public class Driver extends Employee {
 
 
   public void drive() {
-    this.vehicle.retrieveWood(1, departureStock);
-    this.vehicle.dropWood(1, destinationStock);
+    //this.vehicle.retrieveWood(1, departureStock);
+    //this.vehicle.dropWood(1, destinationStock);
   }
 
   @Override

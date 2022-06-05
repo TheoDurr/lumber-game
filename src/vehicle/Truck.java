@@ -12,7 +12,7 @@ public class Truck extends Vehicle {
     public  void retrieveWood(List<Wood> woodLoading, Stock stock){
         if(stock.getCurrentCapacity()>0){
             int woodQuantityToRemove = Math.min(this.capacity, stock.getCurrentCapacity());
-            this.wcontent = stock.removeWood(woodQuantityToRemove);
+            //this.wcontent = stock.removeWood(woodQuantityToRemove);
         }
     }
 
@@ -30,7 +30,7 @@ public class Truck extends Vehicle {
                 wcontent.remove(0);
             }
 
-            stock.addWood(woodContentToAdd);
+            //stock.addWood(woodContentToAdd);
 
         }
     }
