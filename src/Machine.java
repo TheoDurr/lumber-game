@@ -8,8 +8,7 @@ public class Machine extends Factory {
 
   public float price;
 
-    public List<Factory> factory;
-
+  public List<Factory> factory;
 
   public void transformWood() {
   }

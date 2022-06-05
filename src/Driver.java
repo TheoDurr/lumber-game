@@ -24,7 +24,6 @@ public class Driver extends Employee {
     this.vehicle = vehicle;
   }
 
-
   public void drive() {
     this.vehicle.retrieveWood(1, departureStock);
     this.vehicle.dropWood(1, destinationStock);
