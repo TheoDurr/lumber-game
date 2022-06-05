@@ -1,4 +1,6 @@
-public class Trunk {
+package wood;
+
+public class Trunk extends Wood {
 
     private enum type{
         TREE_SPROUT,
