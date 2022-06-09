@@ -1,22 +1,20 @@
 import terrain.Stock;
 import vehicle.Vehicle;
 
+import static java.lang.Thread.sleep;
+
 public class Driver extends Employee {
 
-  //Stock where the wood is taken
+  //terrain.Stock where the wood is taken
   private Stock departureStock;
 
-  //Stock where the wood is brought
+  //terrain.Stock where the wood is brought
   private Stock destinationStock;
 
   private Vehicle vehicle;
 
   private int speed;
 
-  // TODO remove
-  public Driver(){
-    super();
-  }
   public Driver(Stock departureStock, Stock destinationStock, Vehicle vehicle) {
     super();
     this.departureStock = departureStock;
@@ -24,10 +22,9 @@ public class Driver extends Employee {
     this.vehicle = vehicle;
   }
 
-
   public void drive() {
-    //this.vehicle.retrieveWood(1, departureStock);
-    //this.vehicle.dropWood(1, destinationStock);
+    this.vehicle.retrieveWood(departureStock);
+    this.vehicle.dropWood(destinationStock);
   }
 
   @Override

@@ -8,6 +8,8 @@ public abstract class Employee {
 
   private int level;
 
+
   public abstract void getSalary();
+
 
 }

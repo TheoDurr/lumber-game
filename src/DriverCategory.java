@@ -15,6 +15,15 @@ public class DriverCategory extends EmployeeCategory{
 
     @Override
     public void run(){
-        ((Driver)employees.get(0)).drive();
+        while(true){
+            ((Driver)employees.get(0)).drive();
+            // TODO le sleep doit correspondre à la vitesse
+            try {
+                sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }
