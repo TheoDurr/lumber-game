@@ -1,3 +1,9 @@
+import terrain.Factory;
+import terrain.Stock;
+import wood.Tree;
+import wood.TreeState;
+import wood.Wood;
+
 import java.util.List;
 
 public class Machine extends Factory {

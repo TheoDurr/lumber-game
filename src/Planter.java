@@ -4,5 +4,8 @@ public class Planter extends Employee {
 
   public void plant() {
   }
+  @Override
+  public void getSalary() {
 
+  }
 }

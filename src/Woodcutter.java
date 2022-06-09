@@ -1,4 +1,9 @@
+
+import wood.Wood;
+
+import java.util.List;
 import java.util.Objects;
+
 
 public class Woodcutter extends Employee implements Runnable {
   private String name;
@@ -50,7 +55,7 @@ public class Woodcutter extends Employee implements Runnable {
     emplacement.getTree().nextState();
 
     //We add the tree to the stock associated to the land
-    land.getStock().add(emplacement.getTree());
+    land.getStock().addWood(emplacement.getTree());
 
     //We remove the tree from this emplacement
     emplacement.removeTree();
@@ -72,4 +77,8 @@ public class Woodcutter extends Employee implements Runnable {
     
   }
 
+  @Override
+  public void getSalary() {
+
+  }
 }

@@ -1,3 +1,5 @@
+import terrain.Stock;
+import wood.TreeState;
 
 public class Land {
     static final int LAND_SIZE = 20;
@@ -38,7 +40,7 @@ public class Land {
             str+=i+ " : " + emplacements[i].toString() +"\n";
         }
 
-        str +="Stock : "+stock.toString();
+        str +="terrain.Stock : "+stock.toString();
 
         return str;
     }

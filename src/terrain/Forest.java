@@ -1,3 +1,5 @@
+package terrain;
+
 public class Forest extends Terrain {
 
   public int size;
