@@ -1,3 +1,5 @@
+package terminal;
+
 public abstract class Terminal {
 
   private float creationCost;
