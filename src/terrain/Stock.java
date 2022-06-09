@@ -18,6 +18,12 @@ public class Stock {
         content = new ArrayList<Wood>();
     }
 
+    public Stock(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+        content = new ArrayList<Wood>();
+    }
+
+
     public int getCurrentCapacity(){
         return content.size() ;
     }
@@ -40,9 +46,12 @@ public class Stock {
     public void addWood(List<Wood> ws){
 
         // TODO checker que le nombre de bois ne dépasse pas la capacité du stock
-        for(Wood w : ws){
-            content.add(w);
+        if(!this.isFull()){
+            for(Wood w : ws){
+                content.add(w);
+            }
         }
+
 
     }
 
