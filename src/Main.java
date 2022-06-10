@@ -1,33 +1,31 @@
 public class Main {
     public static void main(String[] args) {
-        Woodcutter w = new Woodcutter("Fiher", 1, 2);
-        Woodcutter w2 = new Woodcutter("Creut", 4, 2);
+
+        WoodcutterCategory wcc = new WoodcutterCategory();
+        wcc.buy();
+        wcc.buy();
+        wcc.buy();
+        wcc.buy();
+        wcc.buy();
+        wcc.buy();
+
+        System.out.println(wcc.getSalary());
+
         Land l = new Land();
+        wcc.setLand(l);
+        wcc.startWorking();
 
-        w.setLand(l);
-        w2.setLand(l);
-        
-        //Thread safe
-        w.startWorking();
-
-        //Since there are shared objects between these threads we need to be cautious 
-        //TO_CHANGE
         try {
-            Thread.sleep(500);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        wcc.upgrade();
 
-        w2.startWorking();
-
-
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println(l.toString());
-        
+        PlanterCategory pc = new PlanterCategory();
+        pc.buy();
+        pc.buy();
+        pc.setLand(l);
+        pc.startWorking();
     }
 }

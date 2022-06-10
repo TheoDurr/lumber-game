@@ -14,7 +14,7 @@ public class Stock {
     }
 
     public boolean isFull(){
-        return content.size() == maxCapacity;
+        return content.size() >= maxCapacity;
     }
 
     public void add(Tree t){

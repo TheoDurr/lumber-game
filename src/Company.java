@@ -1,4 +1,4 @@
-public class Company {
+public final class Company {
 
   private String name;
 
@@ -10,7 +10,8 @@ public class Company {
 
   private int nbPlank;
 
-  private void pay(float amount) {
+  public static void pay(float amount) {
+    System.out.println("You just paid "+amount);
   }
 
   public void cashIn(float amount) {

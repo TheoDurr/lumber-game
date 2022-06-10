@@ -19,9 +19,20 @@ public class Land {
         return stock;
     }
 
-    public Emplacement getEmplacementForWC(){
+    public synchronized Emplacement getEmplacementForWC(){
         for(Emplacement emp : emplacements){
             if(!emp.isOccupied() && emp.getType()==EmplacementType.TREE && emp.hasTree() && emp.getTree().getState() == TreeState.MATURE){
+                emp.arrives();
+                return emp;
+            }
+        }
+        return getRestEmplacement();
+    }
+
+    public synchronized Emplacement getEmplacementForP(){
+        for(Emplacement emp : emplacements){
+            if(!emp.isOccupied() && emp.getType()==EmplacementType.TREE && !emp.hasTree()){
+                emp.arrives();
                 return emp;
             }
         }

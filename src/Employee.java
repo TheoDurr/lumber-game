@@ -8,7 +8,11 @@ public abstract class Employee {
 
   private int level;
 
-  public void getSalary() {
+  public float getSalary() {
+    return salary;
+  }
+  public void setSalary(float s) {
+    this.salary = s;
   }
 
 }
