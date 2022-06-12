@@ -1,6 +1,9 @@
-package terminal;
+package demand;
 
 public class Website extends Terminal {
+    /*
+      This class is a Singleton. Only one instance of it exists
+     */
 
     /** Private constructor **/
     private Website(){}

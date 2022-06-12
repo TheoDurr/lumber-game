@@ -1,4 +1,4 @@
-package terminal;
+package demand;
 
 public abstract class Terminal {
 
