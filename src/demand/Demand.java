@@ -1,3 +1,5 @@
+package demand;
+
 public class Demand {
     Boolean completed = false;
     int quantity;

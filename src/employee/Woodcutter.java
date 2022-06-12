@@ -1,9 +1,9 @@
+package employee;
 
-import wood.Wood;
 
-import java.util.List;
-import java.util.Objects;
-
+import terrain.Emplacement;
+import terrain.EmplacementType;
+import terrain.Land;
 
 public class Woodcutter extends Employee implements Runnable {
   private String name;
@@ -14,7 +14,8 @@ public class Woodcutter extends Employee implements Runnable {
   private int efficiency;
 
   //Land on which the woodcutter work
-  private Land land;
+  private
+  Land land;
 
   //Specific emplacement on which the woodcutter is either cutting a tree or waiting for work
   private Emplacement emplacement;
@@ -56,6 +57,8 @@ public class Woodcutter extends Employee implements Runnable {
 
     //We add the tree to the stock associated to the land
     land.getStock().addWood(emplacement.getTree());
+    System.out.println("Land stock number of trunks : " + land.getStock().getCurrentCapacity());
+
 
     //We remove the tree from this emplacement
     emplacement.removeTree();
@@ -67,7 +70,7 @@ public class Woodcutter extends Employee implements Runnable {
   public void run() {
     //The woodcutter will go on a free emplacement where there is a tree that can be cut
     setEmplacement(land.getEmplacementForWC());
-    while(emplacement.getType()==EmplacementType.TREE){
+    while(emplacement.getType()== EmplacementType.TREE){
       cutTree();
       setEmplacement(land.getEmplacementForWC());
     }

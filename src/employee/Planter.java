@@ -1,3 +1,5 @@
+package employee;
+
 public class Planter extends Employee {
 
   private int speed;

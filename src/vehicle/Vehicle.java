@@ -11,7 +11,7 @@ public class Vehicle {
 
   protected int level;
 
-  protected List<Wood> wContent;
+  protected List<Wood> wContent = new ArrayList<Wood>();
 
   protected int capacity = 1;
 
@@ -19,7 +19,7 @@ public class Vehicle {
 
   //Retrieve wood from a stock
   public  void retrieveWood(Stock stock){
-    if(stock.getCurrentCapacity()>0){
+    if(stock.getCurrentCapacity()>0 && wContent.size() <= capacity){
       int woodQuantityToRemove = Math.min(this.capacity, stock.getCurrentCapacity());
       this.wContent = stock.removeWood(woodQuantityToRemove);
     }
@@ -39,7 +39,6 @@ public class Vehicle {
       }
 
       stock.addWood(woodContentToAdd);
-
     }
   }
 

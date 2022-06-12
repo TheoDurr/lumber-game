@@ -1,3 +1,5 @@
+package terrain;
+
 import terrain.Stock;
 import wood.TreeState;
 
@@ -8,13 +10,13 @@ public class Land {
 
     private Stock stock;
 
-    public Land(){
+    public Land(Stock stock){
         emplacements = new Emplacement[LAND_SIZE+1];
         for(int i = 0; i<LAND_SIZE; i++){
             emplacements[i] = new Emplacement();
         }
         emplacements[LAND_SIZE] = new Emplacement(EmplacementType.REST);
-        stock = new Stock();
+        this.stock = stock;
     }
     
     public Stock getStock() {
@@ -23,7 +25,7 @@ public class Land {
 
     public Emplacement getEmplacementForWC(){
         for(Emplacement emp : emplacements){
-            if(!emp.isOccupied() && emp.getType()==EmplacementType.TREE && emp.hasTree() && emp.getTree().getState() == TreeState.MATURE){
+            if(!emp.isOccupied() && emp.getType()== EmplacementType.TREE && emp.hasTree() && emp.getTree().getState() == TreeState.MATURE){
                 return emp;
             }
         }

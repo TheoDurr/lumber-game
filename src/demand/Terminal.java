@@ -2,14 +2,13 @@ package demand;
 
 public abstract class Terminal {
 
-  private float creationCost;
+    private float creationCost;
 
-  private float maintenanceCost;
+    private float maintenanceCost;
 
-  protected void refreshTerminal() {
-  }
+    protected void refreshTerminal() {
+    }
 /*
-
   protected void addDemand(Demand demand) {
   }
 
@@ -17,7 +16,6 @@ public abstract class Terminal {
   }
 
   protected void completeDemand(Demand demand) {
-  }
 
 */
 

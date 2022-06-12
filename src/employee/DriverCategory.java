@@ -1,3 +1,5 @@
+package employee;
+
 import terrain.Stock;
 import vehicle.Vehicle;
 
@@ -19,7 +21,7 @@ public class DriverCategory extends EmployeeCategory{
             ((Driver)employees.get(0)).drive();
             // TODO le sleep doit correspondre à la vitesse
             try {
-                sleep(500);
+                sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

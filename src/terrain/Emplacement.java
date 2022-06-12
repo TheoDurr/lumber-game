@@ -1,3 +1,5 @@
+package terrain;
+
 import wood.Tree;
 import wood.TreeState;
 
