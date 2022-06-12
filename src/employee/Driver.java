@@ -3,7 +3,6 @@ package employee;
 import terrain.Stock;
 import vehicle.Vehicle;
 
-import static java.lang.Thread.sleep;
 
 public class Driver extends Employee {
 

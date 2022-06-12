@@ -57,6 +57,8 @@ public class Woodcutter extends Employee implements Runnable {
 
     //We add the tree to the stock associated to the land
     land.getStock().addWood(emplacement.getTree());
+    System.out.println("Land stock number of trunks : " + land.getStock().getCurrentCapacity());
+
 
     //We remove the tree from this emplacement
     emplacement.removeTree();

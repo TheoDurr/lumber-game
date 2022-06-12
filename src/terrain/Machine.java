@@ -2,13 +2,17 @@ package terrain;
 
 import terrain.Factory;
 import terrain.Stock;
+import wood.Plank;
 import wood.Tree;
 import wood.TreeState;
 import wood.Wood;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Machine extends Factory {
+import static java.lang.Thread.sleep;
+
+public class Machine extends Factory implements Runnable{
 
     private String name;
 
@@ -17,11 +21,11 @@ public class Machine extends Factory {
     private Stock inputStock;
     private Stock outputStock;
 
-    public Machine(String name, float price) {
+    public Machine(String name, float price, Stock inputStock, Stock outputStock) {
         this.name = name;
         this.price = price;
-        this.inputStock = new Stock();
-        this.outputStock = new Stock();
+        this.inputStock = inputStock;
+        this.outputStock = outputStock;
     }
 
     public Stock getInputStock() {
@@ -56,10 +60,38 @@ public class Machine extends Factory {
         this.price = price;
     }
 
-    public void transformWood(Tree t) {
-        if (t.getState() == TreeState.MATURE) {
-            t.nextState();
+    public void transformTreeToPlank(Wood t) {
+
+        List<Plank> planks = new ArrayList<Plank>();
+
+        for(int i = 0 ;  i < 3 ; i++){
+            planks.add(new Plank());
         }
+
+        outputStock.addWood((ArrayList<Wood>)(List<?>) planks);
+    }
+
+    public void run(){
+
+        while(true){
+            // Transform tree into plank if there is wood in the stock
+            if(inputStock.getCurrentCapacity()>0){
+                transformTreeToPlank(inputStock.removeWood(1).get(0));
+            }
+
+            try {
+                sleep(2500);
+            }catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void startWorking(){
+        Thread t = new Thread(this);
+        //this will call the method run (see below)
+        t.start();
     }
 
 }

@@ -10,13 +10,13 @@ public class Land {
 
     private Stock stock;
 
-    public Land(){
+    public Land(Stock stock){
         emplacements = new Emplacement[LAND_SIZE+1];
         for(int i = 0; i<LAND_SIZE; i++){
             emplacements[i] = new Emplacement();
         }
         emplacements[LAND_SIZE] = new Emplacement(EmplacementType.REST);
-        stock = new Stock();
+        this.stock = stock;
     }
     
     public Stock getStock() {
