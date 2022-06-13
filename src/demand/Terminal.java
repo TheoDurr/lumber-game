@@ -24,8 +24,8 @@ public abstract class Terminal {
         this.isUnlocked = false;
     }
 
-    public void unlock(){
-        //TODO: find a way to ensure the company's balance is high enough, and subtract the creation cost
+    public void unlock() {
+        //TODO: find a way to ensure the company's balance is high enough, and subtract the creation cost, this can be done once the company is declared as static
         this.isUnlocked = true;
     }
 
@@ -37,11 +37,13 @@ public abstract class Terminal {
 
     /**
      * Generate a new random demand
+     *
      * @return the newly generated demand
      */
     protected Demand generateDemand() {
         // TODO: Implement random demand Generation
-        return new Demand();
+        // FIXME: This is a sample demand
+        return new Demand(5, 2500);
     }
 
     /**
@@ -51,6 +53,9 @@ public abstract class Terminal {
      * @param demand
      */
     protected void acceptDemand(Demand demand) {
+        if (demand.getState() == DemandState.PENDING) {
+            demand.setState(DemandState.ACCEPTED);
+        }
     }
 
     /**
@@ -60,18 +65,19 @@ public abstract class Terminal {
      * @param demand
      */
     protected void declineDemand(Demand demand) {
+        if (demand.getState() == DemandState.PENDING) {
+            // TODO: Demands which are declined can be removed from the list
+            demand.setState(DemandState.DECLINED);
+        }
     }
 
-    protected boolean completeDemand(Demand d) {
+    protected boolean completeDemand(Demand demand) {
         //TODO: Check if the demand can be completed, if not return false
-        return true;
+        if (demand.getState() == DemandState.ACCEPTED) {
+            // TODO: Check the stock, but the stock reference is missing, maybe the final stockpile can be static
+            return true;
+        } else {
+            return false;
+        }
     }
-/*
-  protected void addDemand(Demand demand) {}
-
-  protected void takeDemand(Demand demand) {}
-
-  protected void completeDemand(Demand demand) {}
-*/
-
 }
