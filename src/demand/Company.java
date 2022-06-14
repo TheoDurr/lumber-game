@@ -1,4 +1,6 @@
-public class Company {
+package demand;
+
+public final class Company {
 
   private String name;
 
@@ -6,11 +8,11 @@ public class Company {
 
   private String pays;
 
-  private double cashFlow;
+  private static double cashFlow;
 
   private int nbPlank;
 
-  private void pay(float amount) {
+  public final static void pay(float amount) {
     cashFlow-=amount;
   }
 
