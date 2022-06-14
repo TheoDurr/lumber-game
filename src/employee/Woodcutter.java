@@ -1,3 +1,8 @@
+package employee;
+
+import terrain.Emplacement;
+import terrain.EmplacementType;
+import terrain.Land;
 import java.util.Random;
 
 public class Woodcutter extends Employee implements Runnable {
@@ -14,7 +19,8 @@ public class Woodcutter extends Employee implements Runnable {
   private int efficiency;
 
   //Land on which the woodcutter work
-  private Land land;
+  private
+  Land land;
 
   //Specific emplacement on which the woodcutter is either cutting a tree or waiting for work
   private Emplacement emplacement;
@@ -65,7 +71,9 @@ public class Woodcutter extends Employee implements Runnable {
     emplacement.getTree().nextState();
 
     //We add the tree to the stock associated to the land
-    land.getStock().add(emplacement.getTree());
+    land.getStock().addWood(emplacement.getTree());
+    System.out.println("Land stock number of trunks : " + land.getStock().getCurrentCapacity());
+
 
     //We remove the tree from this emplacement
     emplacement.removeTree();
@@ -78,13 +86,12 @@ public class Woodcutter extends Employee implements Runnable {
     //The woodcutter will go on a free emplacement where there is a tree that can be cut
     setEmplacement(land.getEmplacementForWC());
     while(emplacement.getType()==EmplacementType.TREE && !land.getStock().isFull()){
+
       cutTree();
       setEmplacement(land.getEmplacementForWC());
     }
     
     System.out.printf(name+" has no emplacement with mature tree on it and that is free !\n");
-    
-    
-  }
 
+  }
 }

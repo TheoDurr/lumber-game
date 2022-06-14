@@ -1,3 +1,5 @@
+package employee;
+
 public abstract class Employee {
 
   private String name;
@@ -7,7 +9,6 @@ public abstract class Employee {
   private float salary;
 
   private int level;
-
   public float getSalary() {
     return salary;
   }

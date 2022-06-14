@@ -1,3 +1,5 @@
+package employee;
+
 import java.util.Random;
 
 public class MarketingManager extends Employee implements Runnable, PurchaseUpgrade {
@@ -63,7 +65,7 @@ public class MarketingManager extends Employee implements Runnable, PurchaseUpgr
 
   @Override
   public void upgrade() {
-    Company.pay(estimatePrice());
+    //demand.Company.pay(estimatePrice());
     levelUp(1);
   }
 

@@ -1,9 +1,11 @@
-public class Tree {
+package wood;
+
+public class Tree extends Wood{
 
     private TreeState state;
 
     public Tree(){
-        state=TreeState.SEED;
+        state= TreeState.SEED;
     }
 
     public Tree(TreeState st){
@@ -28,9 +30,6 @@ public class Tree {
                 break;
             case MATURE :
                 state = TreeState.TRUNK;
-                break;
-            case TRUNK :
-                state = TreeState.PLANK;
                 break;
             default :
                 state = TreeState.SEED;

@@ -1,7 +1,12 @@
+package employee;
+
+import demand.Company;
+import terrain.Land;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class WoodcutterCategory implements PurchaseUpgrade{
+public class WoodcutterCategory implements PurchaseUpgrade {
 
 
     private static final int PRICE_MULT = 100;

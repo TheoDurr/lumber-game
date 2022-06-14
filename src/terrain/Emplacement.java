@@ -1,3 +1,8 @@
+package terrain;
+
+import wood.Tree;
+import wood.TreeState;
+
 import java.util.Objects;
 
 public class Emplacement {

@@ -1,3 +1,10 @@
+package employee;
+import terrain.Emplacement;
+import terrain.EmplacementType;
+import terrain.Land;
+import wood.Tree;
+import wood.TreeState;
+
 import java.util.Random;
 
 public class Planter extends Employee implements Runnable {
@@ -68,7 +75,7 @@ public class Planter extends Employee implements Runnable {
   public void run() {
     //The planter will go on a free emplacement where there is no tree on it
     setEmplacement(land.getEmplacementForP());
-    while(emplacement.getType()==EmplacementType.TREE){
+    while(emplacement.getType()== EmplacementType.TREE){
       plantTree();
       setEmplacement(land.getEmplacementForP());
     }
