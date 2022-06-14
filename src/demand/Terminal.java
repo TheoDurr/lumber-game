@@ -43,7 +43,10 @@ public abstract class Terminal {
     protected Demand generateDemand() {
         // TODO: Implement random demand Generation
         // FIXME: This is a sample demand
-        return new Demand(5, 2500);
+        return new Demand(
+                5,
+                2500,
+                new Customer("Jean"));
     }
 
     /**

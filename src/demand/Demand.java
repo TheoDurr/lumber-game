@@ -7,11 +7,14 @@ public class Demand {
 
     private DemandState state = DemandState.PENDING;
 
+    private Customer customer;
+
     // TODO: add customer reference, when the customer class will be created
 
-    public Demand(int quantity, float price) {
+    public Demand(int quantity, float price, Customer customer) {
         this.quantity = quantity;
         this.price = price;
+        this.customer = customer;
     }
 
     public DemandState getState() {
