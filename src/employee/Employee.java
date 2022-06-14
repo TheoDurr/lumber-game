@@ -9,9 +9,11 @@ public abstract class Employee {
   private float salary;
 
   private int level;
-
-
-  public abstract void getSalary();
-
+  public float getSalary() {
+    return salary;
+  }
+  public void setSalary(float s) {
+    this.salary = s;
+  }
 
 }
