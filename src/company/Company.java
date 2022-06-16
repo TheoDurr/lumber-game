@@ -1,4 +1,4 @@
-package demand;
+package company;
 
 public final class Company {
 
@@ -12,8 +12,13 @@ public final class Company {
 
   private int nbPlank;
 
-  public final static void pay(float amount) {
-    cashFlow-=amount;
+  public static boolean pay(float amount) {
+    if(cashFlow < amount){
+      return false;
+    } else {
+      cashFlow-=amount;
+      return true;
+    }
   }
 
   public void cashIn(float amount) {

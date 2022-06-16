@@ -65,7 +65,7 @@ public class MarketingManager extends Employee implements Runnable, PurchaseUpgr
 
   @Override
   public void upgrade() {
-    //demand.Company.pay(estimatePrice());
+    //company.Company.pay(estimatePrice());
     levelUp(1);
   }
 
