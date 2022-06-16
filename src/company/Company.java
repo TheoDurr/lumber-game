@@ -1,70 +1,83 @@
 package company;
 
+import terrain.Stock;
+
 public final class Company {
 
-  private String name;
+    private String name;
 
-  private String CEO;
+    private String CEO;
 
-  private String pays;
+    private String pays;
 
-  private static double cashFlow;
+    private static double cashFlow;
 
-  private int nbPlank;
+    private int nbPlank;
 
-  public static boolean pay(float amount) {
-    if(cashFlow < amount){
-      return false;
-    } else {
-      cashFlow-=amount;
-      return true;
+    //TODO: @AlexisB edit this to stock category
+    private static Stock finalStock = new Stock();
+
+    public static Stock getFinalStock() {
+        return finalStock;
     }
-  }
 
-  public void cashIn(float amount) {
-    cashFlow+=amount;
-  }
+    public static boolean pay(float amount) {
+        if (cashFlow < amount) {
+            return false;
+        } else {
+            cashFlow -= amount;
+            return true;
+        }
+    }
 
-  public void payInPlanks(int amountInPlank) {
-    nbPlank -=amountInPlank;
-  }
+    public void cashIn(float amount) {
+        cashFlow += amount;
+    }
+
+    public void payInPlanks(int amountInPlank) {
+        nbPlank -= amountInPlank;
+    }
 
 
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public String getCEO() {
-    return CEO;
-  }
-  public void setCEO(String CEO) {
-    this.CEO = CEO;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getPays() {
-    return pays;
-  }
-  public void setPays(String pays) {
-    this.pays = pays;
-  }
+    public String getCEO() {
+        return CEO;
+    }
 
-  public double getCashFlow() {
-    return cashFlow;
-  }
-  public void setCashFlow(double cashFlow) {
-    this.cashFlow = cashFlow;
-  }
+    public void setCEO(String CEO) {
+        this.CEO = CEO;
+    }
 
-  public int getNbPlank() {
-    return nbPlank;
-  }
-  public void setNbPlank(int nbPlank) {
-    this.nbPlank = nbPlank;
-  }
+    public String getPays() {
+        return pays;
+    }
 
+    public void setPays(String pays) {
+        this.pays = pays;
+    }
+
+    public double getCashFlow() {
+        return cashFlow;
+    }
+
+    public void setCashFlow(double cashFlow) {
+        this.cashFlow = cashFlow;
+    }
+
+    public int getNbPlank() {
+        return nbPlank;
+    }
+
+    public void setNbPlank(int nbPlank) {
+        this.nbPlank = nbPlank;
+    }
 
 
 }

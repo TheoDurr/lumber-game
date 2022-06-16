@@ -1,11 +1,14 @@
 package demand;
 
+import company.Company;
+import employee.PurchaseUpgrade;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Terminal {
+public abstract class Terminal implements PurchaseUpgrade {
 
-    private float creationCost;
+    private final float creationCost;
 
     private float maintenanceCost;
 
@@ -16,17 +19,35 @@ public abstract class Terminal {
     private boolean isUnlocked;
 
 
+    /**
+     * Default constructor for the Terminal
+     *
+     * @param creationCost    cost subtracted at the unlocking
+     * @param maintenanceCost cost subtracted each time
+     * @param maxDemands      max capacity of the terminal (can be upgraded)
+     */
     public Terminal(float creationCost, float maintenanceCost, int maxDemands) {
         this.creationCost = creationCost;
         this.maintenanceCost = maintenanceCost;
-        this.demandList = new ArrayList<Demand>();
+        this.demandList = new ArrayList<>();
         this.maxDemands = maxDemands;
         this.isUnlocked = false;
     }
 
-    public void unlock() {
-        //TODO: find a way to ensure the company's balance is high enough, and subtract the creation cost, this can be done once the company is declared as static
-        this.isUnlocked = true;
+    /**
+     * Unlocks the terminal for the player by subtracting the creation cost
+     */
+    public void buy() {
+        if (Company.pay(creationCost)) {
+            this.isUnlocked = true;
+        }
+    }
+
+    /**
+     * This is the method to call to subtract each time maintenance cost of the terminal
+     */
+    public void maintain() {
+        Company.pay(maintenanceCost);
     }
 
     /**
@@ -69,15 +90,21 @@ public abstract class Terminal {
      */
     protected void declineDemand(Demand demand) {
         if (demand.getState() == DemandState.PENDING) {
-            // TODO: Demands which are declined can be removed from the list
+            // NOTE: Demands which are declined can be visually removed from the list (some filtering on demand.getState())
             demand.setState(DemandState.DECLINED);
         }
     }
 
+    /**
+     * Completes the demand and pays the company
+     *
+     * @param demand
+     * @return true : demand completed, false : demand cannot be completed
+     */
     protected boolean completeDemand(Demand demand) {
-        //TODO: Check if the demand can be completed, if not return false
-        if (demand.getState() == DemandState.ACCEPTED) {
-            // TODO: Check the stock, but the stock reference is missing, maybe the final stockpile can be static
+        if (demand.getState() == DemandState.ACCEPTED && Company.getFinalStock().getCurrentCapacity() >= demand.getQuantity()) {
+            demand.setState(DemandState.COMPLETED);
+            Company.pay(demand.getPrice());
             return true;
         } else {
             return false;
