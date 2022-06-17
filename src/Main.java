@@ -1,3 +1,5 @@
+import company.Company;
+import demand.Customer;
 import employee.*;
 import terrain.Land;
 import terrain.Machine;
@@ -12,6 +14,23 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        // Example of company creation (everything is static)
+        Company.init(
+                "Test company",
+                "Théo bien entendu le boss",
+                "Bengladesh",
+
+                // Here we create the customer list
+                new Customer[] {
+                        new Customer("Customer1"),
+                        new Customer("Customer2"),
+                        new Customer("Customer3"),
+                        new Customer("Customer4"),
+                        new Customer("Customer5"),
+                        new Customer("Customer6")
+                }
+        );
+
 
         //We create a new land with 2 woodcutters on it
         Land land = new Land();
