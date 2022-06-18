@@ -39,11 +39,11 @@ public class Stock {
 
     //Get a wood in argument
     //Add this wood to woodCapacity
-    public void addWood(Wood w){
+    synchronized public void addWood(Wood w){
         content.add(w);
     }
 
-    public void addWood(List<Wood> ws){
+    synchronized public void addWood(List<Wood> ws){
 
         // TODO checker que le nombre de bois ne dépasse pas la capacité du stock
         if(!this.isFull()){
@@ -57,7 +57,7 @@ public class Stock {
 
     //Return a list of wood
     //Remove this wood from the wood list of the stock
-    public List<Wood> removeWood(int quantity){
+    synchronized public List<Wood> removeWood(int quantity){
         List<Wood> woodToRemove = new ArrayList<Wood>();
 
         for(int i = 0 ; i < quantity && i < this.getCurrentCapacity(); i++){
