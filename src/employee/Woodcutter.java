@@ -4,6 +4,9 @@ package employee;
 import terrain.Emplacement;
 import terrain.EmplacementType;
 import terrain.Land;
+import wood.Wood;
+
+import java.util.List;
 
 public class Woodcutter extends Employee implements Runnable {
   private String name;

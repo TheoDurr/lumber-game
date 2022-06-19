@@ -28,6 +28,40 @@ public class Machine extends Factory implements Runnable{
         this.outputStock = outputStock;
     }
 
+    public void transformWoodToPlank(Wood t) {
+
+        List<Plank> planks = new ArrayList<Plank>();
+
+        for(int i = 0 ;  i < 3 ; i++){
+            planks.add(new Plank());
+        }
+
+        outputStock.addWood((ArrayList<Wood>)(List<?>) planks);
+    }
+
+    public void run(){
+
+        while(true){
+            // Transform wood into plank if there is enough wood in input stock and not too much in output
+            if(!inputStock.isEmpty() && !outputStock.isFull()){
+                transformWoodToPlank(inputStock.removeWood(1).get(0));
+            }
+
+            try {
+                sleep(1000);
+            }catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void startWorking(){
+        Thread t = new Thread(this);
+        //this will call the method run (see below)
+        t.start();
+    }
+
     public Stock getInputStock() {
         return inputStock;
     }
@@ -60,38 +94,6 @@ public class Machine extends Factory implements Runnable{
         this.price = price;
     }
 
-    public void transformTreeToPlank(Wood t) {
 
-        List<Plank> planks = new ArrayList<Plank>();
-
-        for(int i = 0 ;  i < 3 ; i++){
-            planks.add(new Plank());
-        }
-
-        outputStock.addWood((ArrayList<Wood>)(List<?>) planks);
-    }
-
-    public void run(){
-
-        while(true){
-            // Transform tree into plank if there is wood in the stock
-            if(inputStock.getCurrentCapacity()>0){
-                transformTreeToPlank(inputStock.removeWood(1).get(0));
-            }
-
-            try {
-                sleep(2500);
-            }catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    public void startWorking(){
-        Thread t = new Thread(this);
-        //this will call the method run (see below)
-        t.start();
-    }
 
 }

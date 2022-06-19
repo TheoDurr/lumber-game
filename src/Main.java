@@ -71,11 +71,6 @@ public class Main {
         truckDrivers.addEmployee(truckDriver1);
         truckDrivers.start();
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ie) {
-            // ...
-        }
 
 
 
