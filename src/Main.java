@@ -1,3 +1,7 @@
+import company.Company;
+import demand.Customer;
+import demand.MobileApp;
+import demand.Website;
 import employee.*;
 import terrain.Land;
 import terrain.Machine;
@@ -12,6 +16,55 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        //== Example of company creation (everything is static)
+        //FIXME: these information are placeholders for now.
+        Company.init(
+                "Test company",
+                "Théo bien entendu le boss",
+                "Bengladesh",
+
+                // Here we create the customer list
+                new Customer[]{
+                        new Customer("Customer1"),
+                        new Customer("Customer2"),
+                        new Customer("Customer3"),
+                        new Customer("Customer4"),
+                        new Customer("Customer5"),
+                        new Customer("Customer6")
+                },
+                150000
+        );
+
+        //== Terminals creation
+        //== These objects are SINGLETONS (they cannot be instantiated more than once)
+        // Call this once
+        Website website = Website.getInstance();
+        website.init(
+                1500,
+                150,
+                5
+        );
+        // Generate new demands
+        website.refresh();
+        // Get the list of demands
+        website.getDemandList();
+
+        // Call this once
+        MobileApp mobileApp = MobileApp.getInstance();
+        mobileApp.init(
+                5000,
+                200,
+                10
+        );
+        // Generate new demands
+        mobileApp.refresh();
+
+        // Get the list of demands
+        mobileApp.getDemandList();
+
+        System.out.println(website);
+        System.out.println(mobileApp);
+
 
         //We create a new land with 2 woodcutters on it
         Land land = new Land();
@@ -29,15 +82,13 @@ public class Main {
         List<Wood> startingWoodTestList = new ArrayList<Wood>();
         List<Wood> endingWoodTestList = new ArrayList<Wood>();
 
-        for(int i = 0 ; i < 5 ; i++){
+        for (int i = 0; i < 5; i++) {
             startingWoodTestList.add(new Wood());
             endingWoodTestList.add(new Wood());
         }
 
         land.getStock().addWood(startingWoodTestList);
         machineInputStock.addWood(endingWoodTestList);
-
-
 
 
         //== Vehicle part from forest to machine
@@ -47,13 +98,6 @@ public class Main {
         EmployeeCategory truckDrivers = new DriverCategory();
         truckDrivers.addEmployee(truckDriver1);
         truckDrivers.start();
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ie) {
-            // ...
-        }
-
 
 
 
@@ -79,7 +123,7 @@ public class Main {
         }
 
         // Display for test purposes
-        while(true){
+        while (true) {
             System.out.println(">>>>>>");
             System.out.println("Stock terrain number of trunks : " + land.getStock().getCurrentCapacity());
             System.out.println("Stock machine Input number of trunks : " + machineInputStock.getCurrentCapacity());

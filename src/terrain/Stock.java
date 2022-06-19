@@ -3,6 +3,7 @@ package terrain;
 import wood.Wood;
 import wood.Wood;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,53 +21,64 @@ public class Stock {
         content = new ArrayList<Wood>();
     }
 
-    public Stock(int maxCapacity) {
-        this.maxCapacity = maxCapacity;
-        content = new ArrayList<Wood>();
-    }
 
-
-    public int getCurrentCapacity(){
-        return content.size() ;
-    }
 
     public int getMaxCapacity(){
         return maxCapacity;
     }
 
+    // Only for display purpose, to know if the stock is full or empty use isFull or isEmpty
+    public int getCurrentCapacity(){
+        return this.content.size();
+    }
 
     public boolean isFull(){
         return content.size() == maxCapacity;
     }
 
-    //Get a wood in argument
-    //Add this wood to woodCapacity
-    public void addWood(Wood w){
-        content.add(w);
+    public boolean isEmpty(){
+        return this.content.size() == 0;
     }
 
-    public void addWood(List<Wood> ws){
+    //Get a wood in argument
+    //Add this wood to woodCapacity
+   synchronized public void addWood(Wood w){
+        List <Wood> ws = new ArrayList<>();
+        ws.add(w);
+        addWood(ws);
+    }
 
-        // TODO checker que le nombre de bois ne dépasse pas la capacité du stock
-        if(!this.isFull()){
-            for(Wood w : ws){
-                content.add(w);
+
+    // Add wood if the stock is not full. Otherwise, wait
+    synchronized public void addWood(List<Wood> ws) {
+
+        for(Wood w : ws){
+
+            while(this.isFull()){
+                try {
+                    wait();
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }
+            content.add(w);
+            notifyAll();
 
+        }
 
     }
 
     //Return a list of wood
     //Remove this wood from the wood list of the stock
-    public List<Wood> removeWood(int quantity){
+    synchronized public List<Wood> removeWood(int quantity){
         List<Wood> woodToRemove = new ArrayList<Wood>();
 
-        for(int i = 0 ; i < quantity && i < this.getCurrentCapacity(); i++){
+        for(int i = 0 ; i < quantity && i < this.content.size(); i++){
             woodToRemove.add(this.content.get(0));
             this.content.remove(0);
         }
-
+        notifyAll();
         return woodToRemove;
     }
 

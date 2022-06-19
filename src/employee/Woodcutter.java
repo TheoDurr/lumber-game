@@ -3,7 +3,10 @@ package employee;
 import terrain.Emplacement;
 import terrain.EmplacementType;
 import terrain.Land;
+import wood.Wood;
+import java.util.List;
 import java.util.Random;
+
 
 public class Woodcutter extends Employee implements Runnable {
   private String name;
