@@ -10,22 +10,33 @@ public class Land {
 
     private Stock stock;
 
-    public Land(Stock stock){
+    public Land(){
         emplacements = new Emplacement[LAND_SIZE+1];
         for(int i = 0; i<LAND_SIZE; i++){
             emplacements[i] = new Emplacement();
         }
         emplacements[LAND_SIZE] = new Emplacement(EmplacementType.REST);
-        this.stock = stock;
+        this.stock = new Stock();
     }
     
     public Stock getStock() {
         return stock;
     }
 
-    public Emplacement getEmplacementForWC(){
+    public synchronized Emplacement getEmplacementForWC(){
         for(Emplacement emp : emplacements){
-            if(!emp.isOccupied() && emp.getType()== EmplacementType.TREE && emp.hasTree() && emp.getTree().getState() == TreeState.MATURE){
+            if(!emp.isOccupied() && emp.getType()==EmplacementType.TREE && emp.hasTree() && emp.getTree().getState() == TreeState.MATURE){
+                emp.arrives();
+                return emp;
+            }
+        }
+        return getRestEmplacement();
+    }
+
+    public synchronized Emplacement getEmplacementForP(){
+        for(Emplacement emp : emplacements){
+            if(!emp.isOccupied() && emp.getType()==EmplacementType.TREE && !emp.hasTree()){
+                emp.arrives();
                 return emp;
             }
         }

@@ -1,3 +1,7 @@
+import company.Company;
+import demand.Customer;
+import demand.MobileApp;
+import demand.Website;
 import employee.*;
 import terrain.Land;
 import terrain.Machine;
@@ -12,8 +16,65 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        //== Example of company creation (everything is static)
+        //FIXME: these information are placeholders for now.
+        Company.init(
+                "Test company",
+                "Théo bien entendu le boss",
+                "Bengladesh",
 
-        Stock landStock = new Stock();
+                // Here we create the customer list
+                new Customer[]{
+                        new Customer("Customer1"),
+                        new Customer("Customer2"),
+                        new Customer("Customer3"),
+                        new Customer("Customer4"),
+                        new Customer("Customer5"),
+                        new Customer("Customer6")
+                },
+                150000
+        );
+
+        //== Terminals creation
+        //== These objects are SINGLETONS (they cannot be instantiated more than once)
+        // Call this once
+        Website website = Website.getInstance();
+        website.init(
+                1500,
+                150,
+                5
+        );
+        // Generate new demands
+        website.refresh();
+        // Get the list of demands
+        website.getDemandList();
+
+        // Call this once
+        MobileApp mobileApp = MobileApp.getInstance();
+        mobileApp.init(
+                5000,
+                200,
+                10
+        );
+        // Generate new demands
+        mobileApp.refresh();
+
+        // Get the list of demands
+        mobileApp.getDemandList();
+
+        System.out.println(website);
+        System.out.println(mobileApp);
+
+
+        //We create a new land with 2 woodcutters on it
+        Land land = new Land();
+        WoodcutterCategory wcc = new WoodcutterCategory();
+        wcc.buy();
+        wcc.buy();
+        wcc.setLand(land);
+        wcc.startWorking();
+
+
         Stock machineInputStock = new Stock();
 
 
@@ -21,57 +82,22 @@ public class Main {
         List<Wood> startingWoodTestList = new ArrayList<Wood>();
         List<Wood> endingWoodTestList = new ArrayList<Wood>();
 
-        for(int i = 0 ; i < 5 ; i++){
+        for (int i = 0; i < 5; i++) {
             startingWoodTestList.add(new Wood());
             endingWoodTestList.add(new Wood());
         }
 
-        landStock.addWood(startingWoodTestList);
+        land.getStock().addWood(startingWoodTestList);
         machineInputStock.addWood(endingWoodTestList);
-
-
-
-
-        //== Woodcutter part
-        Woodcutter w = new Woodcutter("Fiher", 1, 2);
-        Woodcutter w2 = new Woodcutter("Creut", 4, 2);
-        Land l = new Land(landStock);
-
-        w.setLand(l);
-        w2.setLand(l);
-
-        //Thread safe
-        w.startWorking();
-
-        //Since there are shared objects between these threads we need to be cautious
-        //TODO CHANGE
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        w2.startWorking();
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println(l.toString());
-
-
 
 
         //== Vehicle part from forest to machine
         Vehicle truck1 = new Truck();
 
-        Employee truckDriver1 = new Driver(landStock, machineInputStock, truck1);
+        Employee truckDriver1 = new Driver(land.getStock(), machineInputStock, truck1);
         EmployeeCategory truckDrivers = new DriverCategory();
         truckDrivers.addEmployee(truckDriver1);
         truckDrivers.start();
-
-
 
 
 
@@ -97,9 +123,9 @@ public class Main {
         }
 
         // Display for test purposes
-        while(true){
+        while (true) {
             System.out.println(">>>>>>");
-            System.out.println("Stock terrain number of trunks : " + landStock.getCurrentCapacity());
+            System.out.println("Stock terrain number of trunks : " + land.getStock().getCurrentCapacity());
             System.out.println("Stock machine Input number of trunks : " + machineInputStock.getCurrentCapacity());
             System.out.println("Stock machine Output number of planks : " + machineOutputStock.getCurrentCapacity());
             System.out.println("Stock command number of planks : " + commandStock.getCurrentCapacity());
@@ -112,8 +138,5 @@ public class Main {
             }
 
         }
-
-
-
     }
 }

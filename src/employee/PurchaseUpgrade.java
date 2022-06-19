@@ -1,3 +1,5 @@
+package employee;
+
 public interface PurchaseUpgrade {
 
   public float estimatePrice();

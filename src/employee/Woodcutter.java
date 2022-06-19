@@ -1,18 +1,23 @@
 package employee;
 
-
 import terrain.Emplacement;
 import terrain.EmplacementType;
 import terrain.Land;
 import wood.Wood;
-
 import java.util.List;
+import java.util.Random;
+
 
 public class Woodcutter extends Employee implements Runnable {
   private String name;
 
   //Speed at which the woodcutter is cutting the tree
-  private int speed;
+  private int level;
+  private int curSpeed;
+  private int baseSpeed;
+  private int speedGrowth;
+
+  private Random statGenerator;
 
   private int efficiency;
 
@@ -23,10 +28,21 @@ public class Woodcutter extends Employee implements Runnable {
   //Specific emplacement on which the woodcutter is either cutting a tree or waiting for work
   private Emplacement emplacement;
 
-  public Woodcutter(String name, int speed, int efficiency){
+  public Woodcutter(String name, int level, int efficiency){
     this.name = name;
-    this.speed = speed;
+    this.level = level;
+    this.statGenerator = new Random();
+    this.baseSpeed = statGenerator.nextInt(10);
+    this.speedGrowth = statGenerator.nextInt(5)+2;
+    this.setSalary(statGenerator.nextFloat()*500+1200);
+    this.curSpeed = baseSpeed + speedGrowth*level;
     this.efficiency = efficiency;
+  }
+
+  public void levelUp(int lvl) {
+    this.level += lvl;
+    this.setSalary(this.getSalary()+statGenerator.nextFloat()*100);
+    this.curSpeed = baseSpeed + speedGrowth*level;
   }
 
   public void setLand(Land l){
@@ -35,10 +51,9 @@ public class Woodcutter extends Employee implements Runnable {
     emplacement = l.getRestEmplacement();
   }
 
-  public void setEmplacement(Emplacement emp){
+  private void setEmplacement(Emplacement emp){
     emplacement.leaves();
     emplacement = emp;
-    emplacement.arrives();
   }
 
   public void startWorking(){
@@ -47,10 +62,10 @@ public class Woodcutter extends Employee implements Runnable {
     t.start();
   }
 
-  public void cutTree() {
+  private void cutTree() {
     //We wait a certain amount of time depending on the speed of the worker
     try {
-        Thread.sleep(5000/speed);
+        Thread.sleep(100000/curSpeed);
     } catch (InterruptedException e) {
         e.printStackTrace();
     }
@@ -73,18 +88,13 @@ public class Woodcutter extends Employee implements Runnable {
   public void run() {
     //The woodcutter will go on a free emplacement where there is a tree that can be cut
     setEmplacement(land.getEmplacementForWC());
-    while(emplacement.getType()== EmplacementType.TREE){
+    while(emplacement.getType()==EmplacementType.TREE && !land.getStock().isFull()){
+
       cutTree();
       setEmplacement(land.getEmplacementForWC());
     }
     
     System.out.printf(name+" has no emplacement with mature tree on it and that is free !\n");
-    
-    
-  }
-
-  @Override
-  public void getSalary() {
 
   }
 }
