@@ -21,6 +21,12 @@ public class Machine extends Factory implements Runnable{
     private Stock inputStock;
     private Stock outputStock;
 
+    private float speed = 5;
+
+    private int level = 1;
+
+
+
     public Machine(String name, float price, Stock inputStock, Stock outputStock) {
         this.name = name;
         this.price = price;
@@ -94,6 +100,38 @@ public class Machine extends Factory implements Runnable{
         this.price = price;
     }
 
+    public void transformTreeToPlank(Wood t) {
+
+        List<Plank> planks = new ArrayList<Plank>();
+
+        for(int i = 0 ;  i < 3 ; i++){
+            planks.add(new Plank());
+        }
+
+        outputStock.addWood((ArrayList<Wood>)(List<?>) planks);
+    }
+
+    public void run(){
+
+        while(true){
+            // Transform tree into plank if there is wood in the stock
+            if(inputStock.getCurrentCapacity()>0){
+                transformTreeToPlank(inputStock.removeWood(1).get(0));
+            }
+
+            try {
+                sleep((long) (15000/speed));
+            }catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 
 
+
+    public void levelUp(int lvl) {
+        this.level += lvl;
+        speed += 1;
+    }
 }
