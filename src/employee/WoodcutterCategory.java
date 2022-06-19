@@ -1,6 +1,6 @@
 package employee;
 
-import demand.Company;
+import company.Company;
 import terrain.Land;
 
 import java.util.ArrayList;
