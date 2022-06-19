@@ -21,6 +21,12 @@ public class Machine extends Factory implements Runnable{
     private Stock inputStock;
     private Stock outputStock;
 
+    private float speed = 5;
+
+    private int level = 1;
+
+
+
     public Machine(String name, float price, Stock inputStock, Stock outputStock) {
         this.name = name;
         this.price = price;
@@ -80,7 +86,7 @@ public class Machine extends Factory implements Runnable{
             }
 
             try {
-                sleep(2500);
+                sleep((long) (15000/speed));
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -94,4 +100,8 @@ public class Machine extends Factory implements Runnable{
         t.start();
     }
 
+    public void levelUp(int lvl) {
+        this.level += lvl;
+        speed += 1;
+    }
 }

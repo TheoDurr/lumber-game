@@ -13,6 +13,8 @@ public class Stock {
 
     private List<Wood> content;
 
+    private int level;
+
     public Stock(){
         maxCapacity = 20;
         content = new ArrayList<Wood>();
@@ -77,5 +79,10 @@ public class Stock {
             it.remove();
         }
         return str;
+    }
+
+    public void levelUp(int lvl) {
+        this.level += lvl;
+        maxCapacity += Math.round(this.level/3);
     }
 }
