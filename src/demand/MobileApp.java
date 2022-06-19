@@ -1,6 +1,6 @@
 package demand;
 
-public class MobileApp extends Terminal {
+public class MobileApp extends Terminal implements TerminalSingleton {
     /*
      * This class is a Singleton. Only one instance of it exists
      */
@@ -15,6 +15,7 @@ public class MobileApp extends Terminal {
      * Private constructor
      **/
     private MobileApp() {
+        super();
     }
 
     /**
@@ -22,5 +23,21 @@ public class MobileApp extends Terminal {
      **/
     public static MobileApp getInstance() {
         return INSTANCE;
+    }
+
+    @Override
+    public void init(float creationCost, float maintenanceCost, int maxDemands) {
+        super.init(creationCost, maintenanceCost, maxDemands);
+    }
+
+    @Override
+    public float estimatePrice(){
+        //FIXME: return real value
+        return 0;
+    }
+
+    @Override
+    public void upgrade() {
+        //TODO: implement me
     }
 }

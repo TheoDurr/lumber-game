@@ -5,10 +5,11 @@ import employee.PurchaseUpgrade;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public abstract class Terminal implements PurchaseUpgrade {
 
-    private final float creationCost;
+    private float creationCost;
 
     private float maintenanceCost;
 
@@ -18,20 +19,31 @@ public abstract class Terminal implements PurchaseUpgrade {
 
     private boolean isUnlocked;
 
+    public Terminal() {
+    }
 
     /**
-     * Default constructor for the Terminal
+     * This method initialize the new Terminal
      *
      * @param creationCost    cost subtracted at the unlocking
      * @param maintenanceCost cost subtracted each time
      * @param maxDemands      max capacity of the terminal (can be upgraded)
      */
-    public Terminal(float creationCost, float maintenanceCost, int maxDemands) {
+    protected void init(float creationCost, float maintenanceCost, int maxDemands) {
         this.creationCost = creationCost;
         this.maintenanceCost = maintenanceCost;
         this.demandList = new ArrayList<>();
         this.maxDemands = maxDemands;
         this.isUnlocked = false;
+    }
+
+    /**
+     * Checks if the terminal is unlocked
+     *
+     * @return true: unlocked - false: locked
+     */
+    public boolean isUnlocked() {
+        return isUnlocked;
     }
 
     /**
@@ -51,23 +63,20 @@ public abstract class Terminal implements PurchaseUpgrade {
     }
 
     /**
-     * This generates randomly new demands
-     */
-    protected void refreshTerminal() {
-    }
-
-    /**
-     * Generate a new random demand
+     * Refresh the terminal by removing pending and declined demands and adding new ones
      *
-     * @return the newly generated demand
+     * @return the count of new demands generated
      */
-    protected Demand generateDemand() {
-        // TODO: Implement random demand Generation
-        // FIXME: This is a sample demand
-        return new Demand(
-                5,
-                2500,
-                new Customer("Jean"));
+    public int refresh() {
+        // We remove old demands
+        demandList.removeIf(demand -> demand.getState() == DemandState.PENDING || demand.getState() == DemandState.DECLINED);
+
+        // We generate new demands
+        int newDemandsCount = maxDemands - demandList.size();
+        for(int i = 0; i < newDemandsCount; i++){
+            demandList.add(new Demand());
+        }
+        return newDemandsCount;
     }
 
     /**
@@ -109,5 +118,36 @@ public abstract class Terminal implements PurchaseUpgrade {
         } else {
             return false;
         }
+    }
+
+    public float getCreationCost() {
+        return creationCost;
+    }
+
+    public float getMaintenanceCost() {
+        return maintenanceCost;
+    }
+
+    public void setMaintenanceCost(float maintenanceCost) {
+        this.maintenanceCost = maintenanceCost;
+    }
+
+    public List<Demand> getDemandList() {
+        return demandList;
+    }
+
+    public int getMaxDemands() {
+        return maxDemands;
+    }
+
+    public void setMaxDemands(int maxDemands) {
+        this.maxDemands = maxDemands;
+    }
+
+    @Override
+    public String toString() {
+        return "Terminal{" +
+                "demandList=" + demandList +
+                '}';
     }
 }

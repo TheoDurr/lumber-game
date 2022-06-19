@@ -68,4 +68,8 @@ public final class Company {
     public int getNbPlank() {
         return nbPlank;
     }
+
+    public static Customer[] getCustomerBook() {
+        return customerBook;
+    }
 }
