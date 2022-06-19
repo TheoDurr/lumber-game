@@ -5,10 +5,11 @@ import java.util.ArrayList;
 public class EmployeeCategory extends Thread{
 
     
-        protected ArrayList<Employee> employees = new ArrayList<Employee>();
+        protected ArrayList<Employee> employees;
 
 
         protected EmployeeCategory(){
+                employees = new ArrayList<Employee>();
         }
 
         @Override

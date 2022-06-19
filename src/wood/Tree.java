@@ -1,7 +1,12 @@
 package wood;
 
+import terrain.Land;
+
+import static java.lang.Thread.sleep;
+
 public class Tree extends Wood{
 
+    private static final int GROWING_TIME = 50000;
     private TreeState state;
 
     public Tree(){
@@ -40,5 +45,20 @@ public class Tree extends Wood{
     public String toString(){
         String str =state+"\n";
         return str;
+    }
+
+    public void hasBeenPlanted(Land land){
+        state = TreeState.SPROUT;
+        new Thread(() -> {
+            try {
+                sleep(GROWING_TIME);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            state = TreeState.MATURE;
+            synchronized (land){
+                land.notifyAll();
+            }
+        }).start();
     }
 }

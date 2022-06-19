@@ -9,6 +9,7 @@ import wood.Wood;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static java.lang.Thread.sleep;
 
@@ -18,14 +19,44 @@ public class Machine extends Factory implements Runnable{
 
     private float price;
 
+    private boolean isWorking;
+
+    private int level;
+
+    private int curSpeed;
+    private int baseSpeed;
+    private int speedGrowth;
+
+    private Random statGenerator;
+
     private Stock inputStock;
     private Stock outputStock;
 
-    public Machine(String name, float price, Stock inputStock, Stock outputStock) {
+    public Machine(String name, float price, Stock inputStock, Stock outputStock,int level) {
         this.name = name;
+        this.isWorking = false;
         this.price = price;
         this.inputStock = inputStock;
         this.outputStock = outputStock;
+        this.level = level;
+        this.statGenerator = new Random();
+        this.baseSpeed = statGenerator.nextInt(10);
+        this.speedGrowth = statGenerator.nextInt(5)+2;
+        this.curSpeed = baseSpeed + speedGrowth*level;
+    }
+
+    public Machine(String name){
+        this.name = name;
+        this.isWorking = false;
+        this.price = 0;
+        this.level = 1;
+        this.inputStock = new Stock();
+        this.outputStock = new Stock();
+
+        this.statGenerator = new Random();
+        this.baseSpeed = statGenerator.nextInt(10);
+        this.speedGrowth = statGenerator.nextInt(5)+2;
+        this.curSpeed = baseSpeed + speedGrowth*level;
     }
 
     public Stock getInputStock() {
@@ -73,11 +104,11 @@ public class Machine extends Factory implements Runnable{
 
     public void run(){
 
-        while(true){
+        while(isWorking){
             // Transform tree into plank if there is wood in the stock
-            if(inputStock.getCurrentCapacity()>0){
-                transformTreeToPlank(inputStock.removeWood(1).get(0));
-            }
+
+            transformTreeToPlank(inputStock.removeWood(1).get(0));
+
 
             try {
                 sleep(2500);
@@ -89,9 +120,19 @@ public class Machine extends Factory implements Runnable{
     }
 
     public void startWorking(){
+        isWorking = true;
         Thread t = new Thread(this);
         //this will call the method run (see below)
         t.start();
+    }
+
+    public void stopWorking(){
+        isWorking = false;
+    }
+
+    public void levelUp(int lvl){
+        level+= lvl;
+        curSpeed += lvl * speedGrowth;
     }
 
 }

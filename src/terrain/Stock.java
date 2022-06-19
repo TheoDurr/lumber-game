@@ -37,34 +37,55 @@ public class Stock {
         return content.size() == maxCapacity;
     }
 
-    //Get a wood in argument
-    //Add this wood to woodCapacity
-    public void addWood(Wood w){
-        content.add(w);
+    public boolean isEmpty(){
+        return content.size() == 0;
     }
 
-    public void addWood(List<Wood> ws){
 
-        // TODO checker que le nombre de bois ne dépasse pas la capacité du stock
-        if(!this.isFull()){
-            for(Wood w : ws){
-                content.add(w);
+    //Get a wood in argument
+    //Add this wood to woodCapacity
+    synchronized public void addWood(Wood w){
+        while(isFull()){
+            try{
+                wait();
             }
+            catch (InterruptedException e){}
         }
+        content.add(w);
+        notifyAll();
+    }
 
-
+    synchronized public void addWood(List<Wood> ws)  {
+        for(Wood w : ws){
+            while(isFull()){
+                try{
+                    wait();
+                }
+                catch (InterruptedException e){}
+            }
+            content.add(w);
+            notifyAll();
+        }
     }
 
     //Return a list of wood
     //Remove this wood from the wood list of the stock
-    public List<Wood> removeWood(int quantity){
+    synchronized public List<Wood> removeWood(int quantity){
         List<Wood> woodToRemove = new ArrayList<Wood>();
+
+        while(isEmpty()){
+            try{
+                wait();
+            }
+            catch (InterruptedException e){}
+        }
 
         for(int i = 0 ; i < quantity && i < this.getCurrentCapacity(); i++){
             woodToRemove.add(this.content.get(0));
             this.content.remove(0);
         }
 
+        notifyAll();
         return woodToRemove;
     }
 

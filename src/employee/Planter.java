@@ -1,9 +1,7 @@
 package employee;
 import terrain.Emplacement;
-import terrain.EmplacementType;
 import terrain.Land;
 import wood.Tree;
-import wood.TreeState;
 
 import java.util.Random;
 
@@ -25,8 +23,10 @@ public class Planter extends Employee implements Runnable {
   //Specific emplacement on which the planter is either planting a tree or waiting for work
   private Emplacement emplacement;
 
+  private boolean isWorking;
 
-  Planter(String name, int level, int efficiency){
+
+  public Planter(String name, int level, int efficiency){
     this.name = name;
     this.level = level;
     this.statGenerator = new Random();
@@ -35,12 +35,20 @@ public class Planter extends Employee implements Runnable {
     this.setSalary(statGenerator.nextFloat()*500+1200);
     this.curSpeed = baseSpeed + speedGrowth*level;
     this.efficiency = efficiency;
+    this.isWorking = false;
   }
 
   public void startWorking(){
-    Thread t = new Thread(this);
-    //this will call the method run (see below)
-    t.start();
+    if(!isWorking){
+      Thread t = new Thread(this);
+      //this will call the method run (see below)
+      isWorking = true;
+      t.start();
+    }
+  }
+
+  public void stopWorking(){
+    isWorking = false;
   }
   public void levelUp(int lvl) {
     this.level += lvl;
@@ -49,35 +57,36 @@ public class Planter extends Employee implements Runnable {
   }
   public void setLand(Land l){
     land = l;
-    //By default the wc will go in the rest emplacement
+    //By default, the wc will go in the rest emplacement
     emplacement = l.getRestEmplacement();
   }
 
-  public void setEmplacement(Emplacement emp){
-    emplacement.leaves();
-    emplacement = emp;
-  }
+  public void setEmplacement(Emplacement emp){emplacement = emp;}
+
   public void plantTree() {
     //We wait a certain amount of time depending on the speed of the worker
     try {
-      Thread.sleep(100000/curSpeed);
+      Thread.sleep(15000/curSpeed);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
 
 
-    Tree t = new Tree(TreeState.MATURE);
+    Tree t = new Tree();
     emplacement.plantTree(t);
+    t.hasBeenPlanted(land);
+
+    emplacement.leaves();
+    setEmplacement(land.getRestEmplacement());
     System.out.println(name+" has just plant a tree !");
   }
 
   @Override
   public void run() {
-    //The planter will go on a free emplacement where there is no tree on it
-    setEmplacement(land.getEmplacementForP());
-    while(emplacement.getType()== EmplacementType.TREE){
-      plantTree();
+    while(isWorking){
+      //The planter will go on a free emplacement where there is no tree on it
       setEmplacement(land.getEmplacementForP());
+      plantTree();
     }
 
     System.out.printf(name+" has no emplacement with no tree on it and that is free !\n");

@@ -1,8 +1,8 @@
 package employee;
 
 import terrain.Emplacement;
-import terrain.EmplacementType;
 import terrain.Land;
+
 import java.util.Random;
 
 public class Woodcutter extends Employee implements Runnable {
@@ -25,6 +25,8 @@ public class Woodcutter extends Employee implements Runnable {
   //Specific emplacement on which the woodcutter is either cutting a tree or waiting for work
   private Emplacement emplacement;
 
+  private boolean isWorking;
+
   public Woodcutter(String name, int level, int efficiency){
     this.name = name;
     this.level = level;
@@ -34,6 +36,7 @@ public class Woodcutter extends Employee implements Runnable {
     this.setSalary(statGenerator.nextFloat()*500+1200);
     this.curSpeed = baseSpeed + speedGrowth*level;
     this.efficiency = efficiency;
+    this.isWorking = false;
   }
 
   public void levelUp(int lvl) {
@@ -49,20 +52,25 @@ public class Woodcutter extends Employee implements Runnable {
   }
 
   private void setEmplacement(Emplacement emp){
-    emplacement.leaves();
     emplacement = emp;
   }
 
   public void startWorking(){
-    Thread t = new Thread(this);
-    //this will call the method run (see below)
-    t.start();
+    if(!isWorking){
+      Thread t = new Thread(this);
+      isWorking = true;
+      t.start();
+    }
+  }
+
+  public void stopWorking(){
+    isWorking = false;
   }
 
   private void cutTree() {
     //We wait a certain amount of time depending on the speed of the worker
     try {
-        Thread.sleep(100000/curSpeed);
+        Thread.sleep(50000/curSpeed);
     } catch (InterruptedException e) {
         e.printStackTrace();
     }
@@ -72,26 +80,32 @@ public class Woodcutter extends Employee implements Runnable {
 
     //We add the tree to the stock associated to the land
     land.getStock().addWood(emplacement.getTree());
-    System.out.println("Land stock number of trunks : " + land.getStock().getCurrentCapacity());
-
 
     //We remove the tree from this emplacement
     emplacement.removeTree();
+
+    //The woodcutter can now leave his emplacement
+    emplacement.leaves();
+    synchronized (land){
+      land.notifyAll();
+
+    }
+    setEmplacement(land.getRestEmplacement());
 
     System.out.println(name+" has just cut a tree !");
   }
 
   @Override
   public void run() {
-    //The woodcutter will go on a free emplacement where there is a tree that can be cut
-    setEmplacement(land.getEmplacementForWC());
-    while(emplacement.getType()==EmplacementType.TREE && !land.getStock().isFull()){
 
-      cutTree();
+    while(isWorking){
+      //The woodcutter will go on a free emplacement where there is a tree that can be cut
+      //The woodcutter ask the shared object (land) for work to do (The shared object (land) will handle the synchronisation of threads)
       setEmplacement(land.getEmplacementForWC());
+      cutTree();
     }
     
-    System.out.printf(name+" has no emplacement with mature tree on it and that is free !\n");
+    System.out.printf(name+" stops working !\n");
 
   }
 }

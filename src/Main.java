@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-
+        /*
         //We create a new land with 2 woodcutters on it
         Land land = new Land();
         WoodcutterCategory wcc = new WoodcutterCategory();
@@ -85,6 +85,36 @@ public class Main {
             System.out.println("Stock machine Input number of trunks : " + machineInputStock.getCurrentCapacity());
             System.out.println("Stock machine Output number of planks : " + machineOutputStock.getCurrentCapacity());
             System.out.println("Stock command number of planks : " + commandStock.getCurrentCapacity());
+            System.out.println("<<<<<<<");
+
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+         */
+        Woodcutter wc = new Woodcutter("Joe",1,1);
+        Planter p = new Planter("Didier",1,1);
+        Machine m = new Machine("m1");
+        Land l = new Land();
+        Driver d = new Driver(l.getStock(),m.getInputStock(),new Vehicle(),1);
+
+        wc.setLand(l);
+        p.setLand(l);
+
+        wc.startWorking();
+        p.startWorking();
+        d.startWorking();
+
+
+        while(true){
+            System.out.println(">>>>>>");
+            System.out.println("Stock terrain number of trunks : " + l.getStock().getCurrentCapacity());
+            System.out.println("Stock machine Input number of trunks : " + m.getInputStock().getCurrentCapacity());
+            System.out.println("Stock machine Output number of planks : " + m.getOutputStock().getCurrentCapacity());
             System.out.println("<<<<<<<");
 
             try {

@@ -2,38 +2,37 @@ package employee;
 
 import demand.Company;
 import terrain.Land;
+import wood.Wood;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WoodcutterCategory implements PurchaseUpgrade {
+public class WoodcutterCategory extends EmployeeCategory implements PurchaseUpgrade {
 
 
     private static final int PRICE_MULT = 100;
-
-    private List<Woodcutter> woodcutters;
     private int level;
 
 
 
 
     public WoodcutterCategory() {
-        woodcutters = new ArrayList<Woodcutter>();
+        super();
         level = 1;
     }
 
     public void startWorking(){
-        woodcutters.forEach((woodcutter)->woodcutter.startWorking());
+        employees.forEach((woodcutter)->((Woodcutter)woodcutter).startWorking());
     }
 
     public void setLand(Land l){
-        woodcutters.forEach((woodcutter)->woodcutter.setLand(l));
+        employees.forEach((woodcutter)->((Woodcutter)woodcutter).setLand(l));
     }
 
     public float getSalary(){
         float sumSalary=0;
-        for(Woodcutter wc : woodcutters){
-            sumSalary += wc.getSalary();
+        for(Employee wc : employees){
+            sumSalary += ((Woodcutter)wc).getSalary();
         }
         return sumSalary;
     }
@@ -48,11 +47,11 @@ public class WoodcutterCategory implements PurchaseUpgrade {
         Company.pay(estimatePrice());
         level++;
         //For each element of woodcutters, we set the new speed
-        woodcutters.forEach( (woodcutter) -> woodcutter.levelUp(1));
+        employees.forEach( (woodcutter) -> ((Woodcutter)woodcutter).levelUp(1));
     }
 
     @Override
     public void buy() {
-        woodcutters.add(new Woodcutter(Integer.toString(woodcutters.size()),level,1));
+        employees.add(new Woodcutter(Integer.toString(employees.size()),level,1));
     }
 }
