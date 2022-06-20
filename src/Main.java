@@ -108,6 +108,7 @@ public class Main {
         wc.startWorking();
         p.startWorking();
         d.startWorking();
+        m.startWorking();
 
 
         while(true){
