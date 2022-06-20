@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-public abstract class Terminal implements PurchaseUpgrade {
+public abstract class Terminal implements PurchaseUpgrade, Runnable {
 
     private float creationCost;
 
@@ -19,6 +19,11 @@ public abstract class Terminal implements PurchaseUpgrade {
 
     private boolean isUnlocked;
 
+    //=== Thread variables
+    private Thread thread;
+    private int refreshDelay;
+    private boolean threadContinue;
+
     public Terminal() {
     }
 
@@ -28,13 +33,18 @@ public abstract class Terminal implements PurchaseUpgrade {
      * @param creationCost    cost subtracted at the unlocking
      * @param maintenanceCost cost subtracted each time
      * @param maxDemands      max capacity of the terminal (can be upgraded)
+     * @param refreshDelay    the milliseconds between two demand updates
      */
-    protected void init(float creationCost, float maintenanceCost, int maxDemands) {
+    protected void init(float creationCost, float maintenanceCost, int maxDemands, int refreshDelay) {
         this.creationCost = creationCost;
         this.maintenanceCost = maintenanceCost;
         this.demandList = new ArrayList<>();
         this.maxDemands = maxDemands;
         this.isUnlocked = false;
+        this.refreshDelay = refreshDelay;
+
+        this.thread = new Thread();
+        this.thread.start();
     }
 
     /**
@@ -63,17 +73,22 @@ public abstract class Terminal implements PurchaseUpgrade {
     }
 
     /**
-     * Refresh the terminal by removing pending and declined demands and adding new ones
+     * Refresh the terminal by removing pending, declined and completed demands and adding new ones
      *
      * @return the count of new demands generated
      */
     public int refresh() {
         // We remove old demands
-        demandList.removeIf(demand -> demand.getState() == DemandState.PENDING || demand.getState() == DemandState.DECLINED);
+        //TODO: Take into account Completed demands
+        demandList.removeIf(demand ->
+                demand.getState() == DemandState.PENDING ||
+                        demand.getState() == DemandState.DECLINED ||
+                        demand.getState() == DemandState.COMPLETED
+        );
 
         // We generate new demands
         int newDemandsCount = maxDemands - demandList.size();
-        for(int i = 0; i < newDemandsCount; i++){
+        for (int i = 0; i < newDemandsCount; i++) {
             demandList.add(new Demand());
         }
         return newDemandsCount;
@@ -83,7 +98,7 @@ public abstract class Terminal implements PurchaseUpgrade {
      * Edit de demand's state from pending to be accepted
      * This demand needs to be completed
      *
-     * @param demand
+     * @param demand the demand to be accepted
      */
     protected void acceptDemand(Demand demand) {
         if (demand.getState() == DemandState.PENDING) {
@@ -95,7 +110,7 @@ public abstract class Terminal implements PurchaseUpgrade {
      * Declines the specified demand
      * This removes it from the terminal
      *
-     * @param demand
+     * @param demand the demand to be declined
      */
     protected void declineDemand(Demand demand) {
         if (demand.getState() == DemandState.PENDING) {
@@ -107,11 +122,12 @@ public abstract class Terminal implements PurchaseUpgrade {
     /**
      * Completes the demand and pays the company
      *
-     * @param demand
+     * @param demand the demand to be completed
      * @return true : demand completed, false : demand cannot be completed
      */
     protected boolean completeDemand(Demand demand) {
         if (demand.getState() == DemandState.ACCEPTED && Company.getFinalStock().getCurrentCapacity() >= demand.getQuantity()) {
+            Company.getFinalStock().removeWood(demand.getQuantity());
             demand.setState(DemandState.COMPLETED);
             Company.pay(demand.getPrice());
             return true;
@@ -142,6 +158,26 @@ public abstract class Terminal implements PurchaseUpgrade {
 
     public void setMaxDemands(int maxDemands) {
         this.maxDemands = maxDemands;
+    }
+
+    public void run() {
+        threadContinue = true;
+        while (threadContinue) {
+            try {
+                Thread.sleep(refreshDelay);
+                this.refresh();
+            } catch (InterruptedException ignored) {
+                System.out.println("Refreshed");
+            }
+        }
+    }
+
+    public void pause(){
+        threadContinue = false;
+    }
+
+    public void resume(){
+        threadContinue = true;
     }
 
     @Override

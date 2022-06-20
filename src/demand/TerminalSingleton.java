@@ -5,5 +5,5 @@ public interface TerminalSingleton {
         return null;
     }
 
-    void init(float creationCost, float maintenanceCost, int maxDemands);
+    void init(float creationCost, float maintenanceCost, int maxDemands, int refreshDelay);
 }

@@ -42,10 +42,12 @@ public class Main {
         website.init(
                 1500,
                 150,
-                5
+                5,
+                10000
         );
         // Generate new demands
-        website.refresh();
+        // We can get the number of new demand by storing the return value of refresh
+        int newDemands = website.refresh();
         // Get the list of demands
         website.getDemandList();
 
@@ -54,7 +56,8 @@ public class Main {
         mobileApp.init(
                 5000,
                 200,
-                10
+                10,
+                10000
         );
         // Generate new demands
         mobileApp.refresh();
@@ -98,7 +101,6 @@ public class Main {
         EmployeeCategory truckDrivers = new DriverCategory();
         truckDrivers.addEmployee(truckDriver1);
         truckDrivers.start();
-
 
 
         //== Machine part
