@@ -6,7 +6,7 @@ import terrain.Land;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlanterCategory implements PurchaseUpgrade {
+public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade {
 
     private static final int PRICE_MULT = 10;
     private static final int MAX_LVL = 100;

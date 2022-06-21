@@ -1,4 +1,5 @@
 package vehicle;
+import employee.PurchaseUpgrade;
 import terrain.Stock;
 import wood.Wood;
 
@@ -42,5 +43,10 @@ public class Vehicle {
     }
   }
 
+
+  public void levelUp(int lvl) {
+    this.level += lvl;
+    // TODO : have a improvement on Vehicle when leveling up
+  }
 
 }
