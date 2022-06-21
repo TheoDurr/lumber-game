@@ -17,7 +17,7 @@ public class MarketingManager extends Employee implements Runnable, PurchaseUpgr
 
   private boolean isWorking;
 
-  MarketingManager(){
+  public MarketingManager(){
     this.level = 1;
     this.statGenerator = new Random();
     this.baseSpeed = statGenerator.nextInt(10);
