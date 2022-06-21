@@ -1,6 +1,6 @@
 package terrain;
 
-import demand.Company;
+import company.Company;
 import employee.PurchaseUpgrade;
 
 import java.util.ArrayList;

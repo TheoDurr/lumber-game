@@ -30,8 +30,8 @@ public class Website extends Terminal implements TerminalSingleton {
     }
 
     @Override
-    public void init(float creationCost, float maintenanceCost, int maxDemands) {
-        super.init(creationCost, maintenanceCost, maxDemands);
+    public void init(float creationCost, float maintenanceCost, int maxDemands, int refreshDelay) {
+        super.init(creationCost, maintenanceCost, maxDemands, refreshDelay);
     }
 
     @Override

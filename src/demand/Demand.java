@@ -45,22 +45,44 @@ public class Demand {
         this.customer = Company.getCustomerBook()[random.nextInt(customerBookLength)];
     }
 
+    /**
+     * Fetches the quantity needed to complete the demand
+     * @return the quantity of items
+     */
     public int getQuantity() {
         return quantity;
     }
 
+    /**
+     * Fetches the amount of money given once the demand is completed
+     * @return the price
+     */
     public float getPrice() {
         return price;
     }
 
+    /**
+     * Returns the customer who has asked for this demand
+     * @return a customer
+     */
     public Customer getCustomer() {
         return customer;
     }
 
+    /**
+     * Get the status of the demand
+     * @return the status
+     * @see DemandState
+     */
     public DemandState getState() {
         return state;
     }
 
+    /**
+     * Set the status of the demand
+     * @param state the new state
+     * @see DemandState
+     */
     public void setState(DemandState state) {
         this.state = state;
     }
