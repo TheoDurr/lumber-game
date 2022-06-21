@@ -54,13 +54,14 @@ public class Machine extends Factory implements Runnable{
             }
 
             try {
-                sleep(1000);
+                sleep((long) (15000/speed));
             }catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
     }
+
+    
 
     public void startWorking(){
         Thread t = new Thread(this);
@@ -111,22 +112,7 @@ public class Machine extends Factory implements Runnable{
         outputStock.addWood((ArrayList<Wood>)(List<?>) planks);
     }
 
-    public void run(){
-
-        while(true){
-            // Transform tree into plank if there is wood in the stock
-            if(inputStock.getCurrentCapacity()>0){
-                transformTreeToPlank(inputStock.removeWood(1).get(0));
-            }
-
-            try {
-                sleep((long) (15000/speed));
-            }catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
+  
 
 
 
