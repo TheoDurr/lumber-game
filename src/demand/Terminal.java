@@ -172,11 +172,11 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
         }
     }
 
-    public void pause(){
+    public void pause() {
         threadContinue = false;
     }
 
-    public void resume(){
+    public void resume() {
         threadContinue = true;
     }
 

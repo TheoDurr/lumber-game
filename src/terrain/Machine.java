@@ -12,7 +12,7 @@ import java.util.List;
 
 import static java.lang.Thread.sleep;
 
-public class Machine extends Factory implements Runnable{
+public class Machine extends Factory implements Runnable {
 
     private String name;
 
@@ -26,7 +26,6 @@ public class Machine extends Factory implements Runnable{
     private int level = 1;
 
 
-
     public Machine(String name, float price, Stock inputStock, Stock outputStock) {
         this.name = name;
         this.price = price;
@@ -38,32 +37,31 @@ public class Machine extends Factory implements Runnable{
 
         List<Plank> planks = new ArrayList<Plank>();
 
-        for(int i = 0 ;  i < 3 ; i++){
+        for (int i = 0; i < 3; i++) {
             planks.add(new Plank());
         }
 
-        outputStock.addWood((ArrayList<Wood>)(List<?>) planks);
+        outputStock.addWood((ArrayList<Wood>) (List<?>) planks);
     }
 
-    public void run(){
+    public void run() {
 
-        while(true){
+        while (true) {
             // Transform wood into plank if there is enough wood in input stock and not too much in output
-            if(!inputStock.isEmpty() && !outputStock.isFull()){
+            if (!inputStock.isEmpty() && !outputStock.isFull()) {
                 transformWoodToPlank(inputStock.removeWood(1).get(0));
             }
 
             try {
-                sleep((long) (15000/speed));
-            }catch (InterruptedException e) {
+                sleep((long) (15000 / speed));
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    
 
-    public void startWorking(){
+    public void startWorking() {
         Thread t = new Thread(this);
         //this will call the method run (see below)
         t.start();
@@ -105,16 +103,12 @@ public class Machine extends Factory implements Runnable{
 
         List<Plank> planks = new ArrayList<Plank>();
 
-        for(int i = 0 ;  i < 3 ; i++){
+        for (int i = 0; i < 3; i++) {
             planks.add(new Plank());
         }
 
-        outputStock.addWood((ArrayList<Wood>)(List<?>) planks);
+        outputStock.addWood((ArrayList<Wood>) (List<?>) planks);
     }
-
-  
-
-
 
     public void levelUp(int lvl) {
         this.level += lvl;

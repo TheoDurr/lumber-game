@@ -31,7 +31,7 @@ public class MobileApp extends Terminal implements TerminalSingleton {
     }
 
     @Override
-    public float estimatePrice(){
+    public float estimatePrice() {
         //FIXME: return real value
         return 0;
     }
