@@ -6,7 +6,7 @@ import wood.Wood;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vehicle {
+public class Vehicle implements PurchaseUpgrade {
 
   protected String name;
 
@@ -41,6 +41,20 @@ public class Vehicle {
 
       stock.addWood(woodContentToAdd);
     }
+  }
+
+  public int getLevel(){
+    return level;
+  }
+  public float estimatePrice(){
+    return this.level*3;
+  }
+
+  public void upgrade(){
+    this.level++;
+  }
+
+  public void buy(){
   }
 
 

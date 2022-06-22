@@ -51,6 +51,10 @@ public class MarketingManager extends Employee implements Runnable, PurchaseUpgr
     curSpeed += speedGrowth*lvl;
   }
 
+  public int getLevel(){
+    return level;
+  }
+
   @Override
   public void run() {
     while(isWorking){

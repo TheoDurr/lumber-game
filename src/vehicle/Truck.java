@@ -7,7 +7,10 @@ import java.util.List;
 
 public class Truck extends Vehicle {
 
-
+    @Override
+    public int getLevel() {
+        return super.getLevel();
+    }
 
 
 }

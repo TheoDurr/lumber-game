@@ -5,6 +5,7 @@ import demand.Customer;
 import demand.MobileApp;
 import demand.Website;
 import employee.*;
+import interfaceGraphique.GraphicalInterface;
 import terrain.*;
 import vehicle.Forklift;
 import vehicle.Truck;
@@ -19,21 +20,21 @@ public class Initialisation {
 
 
     // List of all categories in the game
-    WoodcutterCategory wcc = new WoodcutterCategory();
-    EmployeeCategory planters = new PlanterCategory();
-    EmployeeCategory truckDrivers = new DriverCategory();
-    EmployeeCategory forkliftDrivers = new DriverCategory();
-    MarketingManager marketingManager = new MarketingManager();
+    public WoodcutterCategory wcc = new WoodcutterCategory();
+    public EmployeeCategory planters = new PlanterCategory();
+    public EmployeeCategory truckDrivers = new DriverCategory();
+    public EmployeeCategory forkliftDrivers = new DriverCategory();
+    public MarketingManager marketingManager = new MarketingManager();
 
-    VehicleCategory trucks = new VehicleCategory();
-    VehicleCategory forklifts = new VehicleCategory();
+    public VehicleCategory trucks = new VehicleCategory();
+    public VehicleCategory forklifts = new VehicleCategory();
 
-    MachineCategory machines = new MachineCategory();
+    public MachineCategory machines = new MachineCategory();
 
-    StockCategory landStocks = new StockCategory();
-    StockCategory inputMachineStocks = new StockCategory();
-    StockCategory outputMachineStocks = new StockCategory();
-    StockCategory commandStocks = new StockCategory();
+    public StockCategory landStocks = new StockCategory();
+    public StockCategory inputMachineStocks = new StockCategory();
+    public StockCategory outputMachineStocks = new StockCategory();
+    public StockCategory commandStocks = new StockCategory();
 
 
 
@@ -43,6 +44,8 @@ public class Initialisation {
     public Initialisation(){
         //== Example of company creation (everything is static)
         //FIXME: these information are placeholders for now.
+
+        this.machines = machines ;
         Company.init(
                 "Test company",
                 "Théo bien entendu le boss",
@@ -139,6 +142,8 @@ public class Initialisation {
         forkliftDrivers.addEmployee(forkliftDriver1);
         forkliftDrivers.start();
 
+
+        GraphicalInterface Interface = new GraphicalInterface(this);
 
         try {
             Thread.sleep(1000);
