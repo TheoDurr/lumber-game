@@ -33,15 +33,4 @@ public class MobileApp extends Terminal implements TerminalSingleton {
     public void init(float creationCost, float maintenanceCost, int maxDemands, int refreshDelay) {
         super.init(creationCost, maintenanceCost, maxDemands, refreshDelay);
     }
-
-    @Override
-    public float estimatePrice() {
-        //FIXME: return real value
-        return 0;
-    }
-
-    @Override
-    public void upgrade() {
-        //TODO: implement me
-    }
 }

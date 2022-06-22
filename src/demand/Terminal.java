@@ -15,9 +15,11 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
 
     private List<Demand> demandList;
 
-    private int maxDemands;
-
     private boolean isUnlocked;
+
+    //=== Level and upgrade related
+    private int level;
+    private int maxDemands;
 
     //=== Thread variables
     private Thread thread;
@@ -42,6 +44,7 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
         this.maxDemands = maxDemands;
         this.isUnlocked = false;
         this.refreshDelay = refreshDelay;
+        this.level = 1;
 
         this.thread = new Thread();
         this.thread.start();
@@ -66,6 +69,34 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
     }
 
     /**
+     * Upgrades the Terminal and subtract the upgrade price from the company cash flow
+     *
+     * @see Company
+     */
+    public void upgrade() {
+        Company.pay(this.estimatePrice());
+        levelUp();
+    }
+
+    /**
+     * Increase the level of the Terminal
+     * This level up increase the max demands by 1
+     */
+    private void levelUp() {
+        level++;
+        maxDemands++;
+    }
+
+    /**
+     * Compute the upgrade price
+     *
+     * @return the upgrade price
+     */
+    public float estimatePrice() {
+        return (float) (creationCost * level * 1.5);
+    }
+
+    /**
      * This is the method to call to subtract each time maintenance cost of the terminal
      */
     public void maintain() {
@@ -79,12 +110,7 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
      */
     public int refresh() {
         // We remove old demands
-        //TODO: Take into account Completed demands
-        demandList.removeIf(demand ->
-                demand.getState() == DemandState.PENDING ||
-                        demand.getState() == DemandState.DECLINED ||
-                        demand.getState() == DemandState.COMPLETED
-        );
+        demandList.removeIf(demand -> demand.getState() == DemandState.PENDING || demand.getState() == DemandState.DECLINED || demand.getState() == DemandState.COMPLETED);
 
         // We generate new demands
         int newDemandsCount = maxDemands - demandList.size();
@@ -182,8 +208,6 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
 
     @Override
     public String toString() {
-        return "Terminal{" +
-                "demandList=" + demandList +
-                '}';
+        return "Terminal{" + "demandList=" + demandList + '}';
     }
 }
