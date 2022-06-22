@@ -49,7 +49,7 @@ public final class Company {
         nbPlank -= amountInPlank;
     }
 
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
@@ -61,7 +61,7 @@ public final class Company {
         return pays;
     }
 
-    public double getCashFlow() {
+    public static double getCashFlow() {
         return cashFlow;
     }
 

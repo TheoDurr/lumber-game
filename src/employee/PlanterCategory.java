@@ -36,6 +36,13 @@ public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade
         return sumSalary;
     }
 
+    public int getNumber(){
+        return planters.size();
+    }
+
+    public int getLevel(){
+        return level;
+    }
 
     @Override
     public float estimatePrice() {

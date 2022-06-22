@@ -30,6 +30,15 @@ public class VehicleCategory {
         vehicles.forEach( (vehicle) -> vehicle.levelUp(1));
     }
 
+    public int getNumber(){
+        return vehicles.size();
+    }
 
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void buy(){
+    }
 }

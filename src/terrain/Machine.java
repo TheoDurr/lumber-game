@@ -1,5 +1,6 @@
 package terrain;
 
+import employee.PurchaseUpgrade;
 import terrain.Factory;
 import terrain.Stock;
 import wood.Plank;
@@ -12,7 +13,9 @@ import java.util.List;
 
 import static java.lang.Thread.sleep;
 
-public class Machine extends Factory implements Runnable {
+
+public class Machine extends Factory implements Runnable, PurchaseUpgrade {
+
 
     private String name;
 
@@ -114,4 +117,37 @@ public class Machine extends Factory implements Runnable {
         this.level += lvl;
         speed += 1;
     }
+
+
+    @Override
+    public float estimatePrice() {
+        return 0;
+    }
+
+    @Override
+    public void upgrade() {
+
+    }
+
+    @Override
+    public void buy() {
+
+    }
+
+
+    /*
+    public float estimatePrice(){
+        return this.speed*3;
+    }
+
+    public void upgrade(){
+        this.speed++;
+    }
+
+
+    public void buy(){
+        this.capacity++;
+    }
+    */
+
 }

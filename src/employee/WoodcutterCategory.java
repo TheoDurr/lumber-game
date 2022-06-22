@@ -17,6 +17,7 @@ public class WoodcutterCategory implements PurchaseUpgrade {
 
 
 
+
     public WoodcutterCategory() {
         woodcutters = new ArrayList<Woodcutter>();
         level = 1;
@@ -36,6 +37,14 @@ public class WoodcutterCategory implements PurchaseUpgrade {
             sumSalary += wc.getSalary();
         }
         return sumSalary;
+    }
+
+    public int getNumber(){
+        return woodcutters.size();
+    }
+
+    public int getLevel(){
+        return level;
     }
 
     @Override
