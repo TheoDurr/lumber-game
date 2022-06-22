@@ -9,7 +9,7 @@ public class MobileApp extends Terminal implements TerminalSingleton {
      * Unique pre-initialized instance
      **/
 
-    private static MobileApp INSTANCE = new MobileApp();
+    private static MobileApp INSTANCE = null;
 
     /**
      * Private constructor
@@ -22,6 +22,10 @@ public class MobileApp extends Terminal implements TerminalSingleton {
      * Access point for the unique singleton instance
      **/
     public static MobileApp getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new MobileApp();
+        }
+
         return INSTANCE;
     }
 

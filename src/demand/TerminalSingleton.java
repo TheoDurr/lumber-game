@@ -1,7 +1,7 @@
 package demand;
 
 public interface TerminalSingleton {
-    static Website getInstance() {
+    static Terminal getInstance() {
         return null;
     }
 
