@@ -26,7 +26,7 @@ public class Planter extends Employee implements Runnable {
   private Emplacement emplacement;
 
 
-  Planter(String name, int level, int efficiency){
+  Planter(String name, int level){
     this.name = name;
     this.level = level;
     this.statGenerator = new Random();
@@ -34,7 +34,7 @@ public class Planter extends Employee implements Runnable {
     this.speedGrowth = statGenerator.nextInt(5)+2;
     this.setSalary(statGenerator.nextFloat()*500+1200);
     this.curSpeed = baseSpeed + speedGrowth*level;
-    this.efficiency = efficiency;
+    this.efficiency = statGenerator.nextInt(10);
   }
 
   public void startWorking(){
@@ -65,9 +65,11 @@ public class Planter extends Employee implements Runnable {
       e.printStackTrace();
     }
 
-
-    Tree t = new Tree(TreeState.MATURE);
-    emplacement.plantTree(t);
+    //There is a probability that the planter don't succeed to plant a tree depending on his efficiency
+    if(statGenerator.nextInt(100)>efficiency) {
+      Tree t = new Tree(TreeState.MATURE);
+      emplacement.plantTree(t);
+    }
     System.out.println(name+" has just plant a tree !");
   }
 
