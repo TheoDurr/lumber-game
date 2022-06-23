@@ -61,6 +61,6 @@ public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade
 
     @Override
     public void buy() {
-        planters.add(new Planter(Integer.toString(planters.size()),level,1));
+        planters.add(new Planter(Integer.toString(planters.size()),level));
     }
 }
