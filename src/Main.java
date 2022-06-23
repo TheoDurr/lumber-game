@@ -23,14 +23,5 @@ public class Main {
         Initialisation init = new Initialisation();
 
 
-        //We create a new land with 2 woodcutters on it
-        Land land = new Land();
-        WoodcutterCategory wcc = new WoodcutterCategory();
-        wcc.buy();
-        wcc.buy();
-        wcc.setLand(land);
-        wcc.startWorking();
-
-
     }
 }
