@@ -123,7 +123,7 @@ public class Initialisation {
         //== Vehicle part from forest to machine
         Vehicle truck1 = new Truck();
 
-        Employee truckDriver1 = new Driver(land.getStock(), machineInputStock, truck1);
+        Employee truckDriver1 = new Driver(land.getStock(), machineInputStock, truck1,1);
         truckDrivers.addEmployee(truckDriver1);
         truckDrivers.start();
 
@@ -138,7 +138,7 @@ public class Initialisation {
         Stock commandStock = new Stock();
         Vehicle forklift1 = new Forklift();
 
-        Employee forkliftDriver1 = new Driver(machineOutputStock, commandStock, forklift1);
+        Employee forkliftDriver1 = new Driver(machineOutputStock, commandStock, forklift1,1);
         forkliftDrivers.addEmployee(forkliftDriver1);
         forkliftDrivers.start();
 

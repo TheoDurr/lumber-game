@@ -51,9 +51,9 @@ public class Machine extends Factory implements Runnable, PurchaseUpgrade {
 
         while (true) {
             // Transform wood into plank if there is enough wood in input stock and not too much in output
-            if (!inputStock.isEmpty() && !outputStock.isFull()) {
-                transformWoodToPlank(inputStock.removeWood(1).get(0));
-            }
+
+            transformWoodToPlank(inputStock.removeWood(1).get(0));
+
 
             try {
                 sleep((long) (15000 / speed));

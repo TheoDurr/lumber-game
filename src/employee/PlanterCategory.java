@@ -11,33 +11,32 @@ public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade
     private static final int PRICE_MULT = 10;
     private static final int MAX_LVL = 100;
 
-    private List<Planter> planters;
     private int level;
 
 
     public PlanterCategory() {
-        planters = new ArrayList<Planter>();
+        super();
         level = 1;
     }
 
     public void startWorking(){
-        planters.forEach((planter)->planter.startWorking());
+        employees.forEach((planter)->((Planter)planter).startWorking());
     }
 
     public void setLand(Land l){
-        planters.forEach((planter)->planter.setLand(l));
+        employees.forEach((planter)->((Planter)planter).setLand(l));
     }
 
     public float getSalary(){
         float sumSalary=0;
-        for(Planter p : planters){
-            sumSalary += p.getSalary();
+        for(Employee p : employees){
+            sumSalary += ((Planter)p).getSalary();
         }
         return sumSalary;
     }
 
     public int getNumber(){
-        return planters.size();
+        return employees.size();
     }
 
     public int getLevel(){
@@ -55,12 +54,12 @@ public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade
             Company.pay(estimatePrice());
             level++;
             //For each element of woodcutters, we set the new speed
-            planters.forEach( (planter) -> planter.levelUp(1));
+            employees.forEach( (planter) -> ((Planter)planter).levelUp(1));
         }
     }
 
     @Override
     public void buy() {
-        planters.add(new Planter(Integer.toString(planters.size()),level));
+        employees.add(new Planter(Integer.toString(employees.size()),level));
     }
 }
