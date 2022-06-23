@@ -62,6 +62,6 @@ public class WoodcutterCategory implements PurchaseUpgrade {
 
     @Override
     public void buy() {
-        woodcutters.add(new Woodcutter(Integer.toString(woodcutters.size()),level,1));
+        woodcutters.add(new Woodcutter(Integer.toString(woodcutters.size()),level));
     }
 }
