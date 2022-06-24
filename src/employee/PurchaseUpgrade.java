@@ -1,9 +1,9 @@
 package employee;
 
 public interface PurchaseUpgrade {
-    public float estimatePrice();
+    float estimatePrice();
 
-    public void upgrade();
+    void upgrade();
 
     public void buy();
 

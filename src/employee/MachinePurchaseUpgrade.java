@@ -1,8 +1,12 @@
 package employee;
 
 import terrain.Stock;
+import terrain.StockCategory;
 
-public interface MachinePurchaseUpgrade extends PurchaseUpgrade{
+public interface MachinePurchaseUpgrade {
+    float estimatePrice();
 
-    public void buy(Stock inputStock, Stock outputStock);
+    void upgrade();
+
+    void buy(StockCategory inputStock, StockCategory outputStock);
 }

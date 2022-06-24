@@ -4,9 +4,6 @@ import company.Company;
 import terrain.Forest;
 import terrain.Land;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade {
 
     private static final int PRICE_MULT = 10;
@@ -21,38 +18,39 @@ public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade
         super();
         level = 1;
     }
+
     public PlanterCategory(Forest forest) {
         this();
         this.forest = forest;
     }
 
-    public void startWorking(){
-        employees.forEach((planter)->((Planter)planter).startWorking());
+    public void startWorking() {
+        employees.forEach((planter) -> ((Planter) planter).startWorking());
     }
 
-    public void setLand(Land l){
-        employees.forEach((planter)->((Planter)planter).setLand(l));
+    public void setLand(Land l) {
+        employees.forEach((planter) -> ((Planter) planter).setLand(l));
     }
 
-    public float getSalary(){
-        float sumSalary=0;
-        for(Employee p : employees){
-            sumSalary += ((Planter)p).getSalary();
+    public float getSalary() {
+        float sumSalary = 0;
+        for (Employee p : employees) {
+            sumSalary += p.getSalary();
         }
         return sumSalary;
     }
 
-    public int getNumber(){
+    public int getNumber() {
         return employees.size();
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return level;
     }
 
     @Override
     public float estimatePrice() {
-        return (float) (PRICE_MULT*Math.pow(level,2));
+        return (float) (PRICE_MULT * Math.pow(level, 2));
     }
 
     @Override
@@ -64,12 +62,13 @@ public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade
                 employees.forEach( (planter) -> ((Planter)planter).levelUp(1));
             }
 
+
         }
     }
 
     @Override
     public void buy() {
-        Planter planter = new Planter(Integer.toString(employees.size()),level);
+        Planter planter = new Planter(Integer.toString(employees.size()), level);
         Land landToSet = forest.getLandFewestWC();
         landToSet.newPlanter();
         //We set the land with the fewest woodcutter on it
