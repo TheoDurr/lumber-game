@@ -1,6 +1,7 @@
 package employee;
 
 import company.Company;
+import terrain.Forest;
 import terrain.Land;
 
 import java.util.ArrayList;
@@ -13,10 +14,16 @@ public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade
 
     private int level;
 
+    private Forest forest;
+
 
     public PlanterCategory() {
         super();
         level = 1;
+    }
+    public PlanterCategory(Forest forest) {
+        this();
+        this.forest = forest;
     }
 
     public void startWorking(){
@@ -60,6 +67,12 @@ public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade
 
     @Override
     public void buy() {
-        employees.add(new Planter(Integer.toString(employees.size()),level));
+        Planter planter = new Planter(Integer.toString(employees.size()),level);
+        Land landToSet = forest.getLandFewestWC();
+        landToSet.newPlanter();
+        //We set the land with the fewest woodcutter on it
+        planter.setLand(landToSet);
+        planter.startWorking();
+        employees.add(planter);
     }
 }

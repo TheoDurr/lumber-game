@@ -18,8 +18,8 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
     private boolean isUnlocked;
 
     //=== Level and upgrade related
-    private int level;
-    private int maxDemands;
+    private static int level;
+    private static int maxDemands;
 
     //=== Thread variables
     private Thread thread;
@@ -41,10 +41,10 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
         this.creationCost = creationCost;
         this.maintenanceCost = maintenanceCost;
         this.demandList = new ArrayList<>();
-        this.maxDemands = maxDemands;
+        Terminal.maxDemands = maxDemands;
         this.isUnlocked = false;
         this.refreshDelay = refreshDelay;
-        this.level = 1;
+        Terminal.level = 1;
 
         this.thread = new Thread();
         this.thread.start();
@@ -85,6 +85,7 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
     private void levelUp() {
         level++;
         maxDemands++;
+        refreshDelay /= 1.2;
     }
 
     /**

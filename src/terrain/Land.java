@@ -7,6 +7,9 @@ public class Land {
     //We use an array because the number of emplacements in a land wont grow
     private Emplacement[] emplacements;
 
+    private int nbOfWoodcutter;
+    private int nbOfPlanter;
+
     private Stock stock;
 
     private StockCategory landStocks = new StockCategory();
@@ -17,6 +20,8 @@ public class Land {
         }
         emplacements[LAND_SIZE] = new Emplacement(EmplacementType.REST);
         this.stock = new Stock();
+        nbOfWoodcutter=0;
+        nbOfPlanter=0;
     }
     
     public Stock getStock() {
@@ -45,6 +50,22 @@ public class Land {
 
     public Emplacement getRestEmplacement(){
         return emplacements[LAND_SIZE];
+    }
+
+    public void newWoodcutter(){
+        nbOfWoodcutter++;
+    }
+
+    public void newPlanter(){
+        nbOfPlanter++;
+    }
+
+    public int getNbOfWoodcutter() {
+        return nbOfWoodcutter;
+    }
+
+    public int getNbOfPlanter() {
+        return nbOfPlanter;
     }
 
     public String toString(){

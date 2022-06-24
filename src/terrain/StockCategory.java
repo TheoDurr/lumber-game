@@ -24,6 +24,10 @@ public class StockCategory implements PurchaseUpgrade {
         this.stocks.add(stock);
     }
 
+    public Stock getStock(int index){
+        return stocks.get(index);
+    }
+
     @Override
     public float estimatePrice() {
         return (float) (PRICE_MULT*Math.pow(level,2));

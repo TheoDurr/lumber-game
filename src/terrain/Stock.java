@@ -17,10 +17,16 @@ public class Stock {
     private int level;
 
     public Stock(){
+        level = 1;
         maxCapacity = 20;
         content = new ArrayList<Wood>();
     }
 
+    public Stock(int level){
+        this.level = level;
+        maxCapacity = 20;
+        content = new ArrayList<Wood>();
+    }
 
 
     public int getMaxCapacity(){
