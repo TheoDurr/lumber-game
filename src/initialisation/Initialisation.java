@@ -120,7 +120,7 @@ public class Initialisation {
         machineInputStock.addWood(endingWoodTestList);
 
 
-        //== Vehicle part from forest to machine
+        //== Add one truck to truckCategory
         Vehicle truck1 = new Truck();
 
         Employee truckDriver1 = new Driver(land.getStock(), machineInputStock, truck1,1);
@@ -134,7 +134,7 @@ public class Initialisation {
         machine.startWorking();
 
 
-        //== Forklift part
+        //== Add one forklift to forkliftCategory
         Stock commandStock = new Stock();
         Vehicle forklift1 = new Forklift();
 
