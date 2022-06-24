@@ -56,10 +56,12 @@ public class WoodcutterCategory extends EmployeeCategory implements PurchaseUpgr
 
     @Override
     public void upgrade() {
-        Company.pay(estimatePrice());
-        level++;
-        //For each element of woodcutters, we set the new speed
-        employees.forEach( (woodcutter) -> ((Woodcutter)woodcutter).levelUp(1));
+        if(Company.pay(estimatePrice())){
+            level++;
+            //For each element of woodcutters, we set the new speed
+            employees.forEach( (woodcutter) -> ((Woodcutter)woodcutter).levelUp(1));
+        }
+
     }
 
     @Override

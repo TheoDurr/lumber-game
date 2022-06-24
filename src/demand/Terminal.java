@@ -74,8 +74,10 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
      * @see Company
      */
     public void upgrade() {
-        Company.pay(this.estimatePrice());
-        levelUp();
+        if(Company.pay(this.estimatePrice())){
+            levelUp();
+        }
+
     }
 
     /**

@@ -43,10 +43,12 @@ public class MachineCategory implements MachinePurchaseUpgrade {
      */
     @Override
     public void upgrade() {
-        Company.pay(estimatePrice());
-        level++;
-        //For each element of machine, we set the new speed
-        machines.forEach((machine) -> machine.levelUp(1));
+        if(Company.pay(estimatePrice())){
+            level++;
+            //For each element of machine, we set the new speed
+            machines.forEach((machine) -> machine.levelUp(1));
+        }
+
     }
 
     @Override
