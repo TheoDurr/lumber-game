@@ -35,7 +35,7 @@ public class Initialisation {
 
     // Employee categories
     public EmployeeCategory wcc = new WoodcutterCategory(forest);
-    public EmployeeCategory planters = new PlanterCategory();
+    public EmployeeCategory planters = new PlanterCategory(forest);
     public DriverCategory truckDrivers = new DriverCategory(landStocks, inputMachineStocks);
     public DriverCategory forkliftDrivers = new DriverCategory(outputMachineStocks, commandStocks);
     public MarketingManager marketingManager = new MarketingManager(100,100, website, mobileApp);
