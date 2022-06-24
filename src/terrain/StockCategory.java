@@ -37,10 +37,12 @@ public class StockCategory implements PurchaseUpgrade {
 
     @Override
     public void upgrade() {
-        Company.pay(estimatePrice());
-        level++;
-        //For each element of woodcutters, we set the new speed
-        stocks.forEach((stock) -> stock.levelUp(1));
+        if(Company.pay(estimatePrice())){
+            level++;
+            //For each element of woodcutters, we set the new speed
+            stocks.forEach( (stock) -> stock.levelUp(1));
+        }
+
     }
 
     @Override

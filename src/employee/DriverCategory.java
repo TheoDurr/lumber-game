@@ -56,8 +56,10 @@ public class DriverCategory extends EmployeeCategory implements PurchaseUpgrade{
 
     @Override
     public void upgrade() {
-        Company.pay(estimatePrice());
-        level++;
+        if(Company.pay(estimatePrice())){
+            level++;
+
+        }
         //For each element of woodcutters, we set the new speed
         employees.forEach( (driver) -> ((Driver)driver).levelUp(1));
     }

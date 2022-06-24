@@ -46,10 +46,11 @@ public class MarketingManager extends Employee implements PurchaseUpgrade {
 
     @Override
     public void upgrade() {
-        Company.pay(estimatePrice());
-        website.upgrade();
-        mobileApp.upgrade();
-        levelUp(1);
+        if(Company.pay(estimatePrice())){
+            website.upgrade();
+            mobileApp.upgrade();
+            levelUp(1);
+        }
     }
 
     @Override

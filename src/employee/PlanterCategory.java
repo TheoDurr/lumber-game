@@ -55,11 +55,14 @@ public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade
 
     @Override
     public void upgrade() {
-        if (level < MAX_LVL) {
-            Company.pay(estimatePrice());
-            level++;
-            //For each element of woodcutters, we set the new speed
-            employees.forEach((planter) -> ((Planter) planter).levelUp(1));
+        if(level<MAX_LVL){
+            if(Company.pay(estimatePrice())){
+                level++;
+                //For each element of woodcutters, we set the new speed
+                employees.forEach( (planter) -> ((Planter)planter).levelUp(1));
+            }
+
+
         }
     }
 
