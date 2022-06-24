@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+
+import demand.Demand;
+import demand.DemandState;
+import demand.MobileApp;
 import initialisation.Initialisation;
 
 
@@ -19,6 +23,7 @@ public class GraphicalInterface extends JFrame implements Runnable{
         this.init = init;
         createInterface();
     }
+
 
     JTextArea amountMoney;
 
@@ -41,7 +46,7 @@ public class GraphicalInterface extends JFrame implements Runnable{
 
     JButton buyLumberJack;
     JButton buyPlanter;
-    JButton buyDriver;
+
 
 
     JButton upgradeLumberJack;
@@ -51,6 +56,8 @@ public class GraphicalInterface extends JFrame implements Runnable{
 
     JButton upgradeTruck;
     JButton upgradeForklift;
+    JButton buyTruck;
+    JButton buyFoklift;
 
     JButton buyMachine;
 
@@ -67,6 +74,10 @@ public class GraphicalInterface extends JFrame implements Runnable{
     JButton seeTerminal;
     JButton hideTerminal;
 
+    JScrollPane paneDemand;
+
+    JLabel scrollView;
+
 
     public void createInterface() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,8 +87,9 @@ public class GraphicalInterface extends JFrame implements Runnable{
         this.setUndecorated(true);
 
         createTerminal();
+        updateTerminal(MobileApp.getInstance().getDemandList());
 
-        newDemand("Harry" , 13, 20 ,20,20);
+
 
 
         ImageIcon bigRectangle = resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/BigRectangle.png"),0.75f);
@@ -185,13 +197,7 @@ public class GraphicalInterface extends JFrame implements Runnable{
 
             }
         });
-        buyDriver = newAddButton(50,550);
-        buyDriver.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                init.truckDrivers.buy();
-            }
-        });
+
 
         upgradeLumberJack = newUpgradeButton(195,250);
         upgradeLumberJack.addActionListener(new ActionListener() {
@@ -247,11 +253,28 @@ public class GraphicalInterface extends JFrame implements Runnable{
 
 
         //Vehicle Part
+
+        buyTruck = newAddButton(420,250);
+        buyTruck.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                init.truckDrivers.buy();
+            }
+        });
+
         upgradeTruck = newUpgradeButton(565,250);
         upgradeTruck.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 init.trucks.buy();
+            }
+        });
+
+        buyFoklift = newAddButton(420,400);
+        buyFoklift.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                init.truckDrivers.buy();
             }
         });
         upgradeForklift = newUpgradeButton(565,400);
@@ -306,9 +329,9 @@ public class GraphicalInterface extends JFrame implements Runnable{
 
         //Stock Part
         newText("Stock",1250,85,30);
-        newText("Earth Stock",1245,155,20);
-        newText("Stock before Machine",1210,305,20);
-        newText("Stock after Machine",1213,455,20);
+        newText("Forest Stock",1245,155,20);
+        newText("Input Stock Machine",1210,305,20);
+        newText("Output Stock Machine",1213,455,20);
         newText("Command Stock",1235,605,20);
 
         earthStockOverlay =  newStockOverlay(1270,195);
@@ -383,7 +406,7 @@ public class GraphicalInterface extends JFrame implements Runnable{
         return picLabel;
     }
 
-    public JLabel newImage(ImageIcon image,int x,int y, JDialog target){
+    public JLabel newImage(ImageIcon image,int x,int y, JLabel target){
         JLabel picLabel = new JLabel();
         picLabel.setIcon(image);
         picLabel.setLocation(x, y);
@@ -405,7 +428,7 @@ public class GraphicalInterface extends JFrame implements Runnable{
         return textArea;
     }
 
-    public JTextArea newText(String text, int x, int y, int size, JDialog target ){
+    public JTextArea newText(String text, int x, int y, int size, JLabel target ){
         JTextArea textArea = new JTextArea();
         textArea.setText(text);
         textArea.setEditable(false);
@@ -500,44 +523,84 @@ public class GraphicalInterface extends JFrame implements Runnable{
                                                                                  //        2 = salary
     }
 
-    public void newDemand(String customer, int price, int quantity,int x,int y){
-        newText(customer,x+30,y+20,16, commandWindow);
-        newText("Price : " + price , x+30,y+60 , 16, commandWindow);
-        newText("Quantity : " + quantity , x+110,y+60 , 16, commandWindow);
-        JButton validButton = new JButton();
-        validButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
+    public void newDemand(Demand demand,int x,int y, JLabel fenDemand){
+        String customer = demand.getCustomer().getName();
+        float price = demand.getPrice();
+        int quantity = demand.getQuantity();
 
+
+        if(demand.getState()!=DemandState.ACCEPTED) {
+            JButton validButton = new JButton();
+            JButton denyButton = new JButton();
+
+
+            validButton.addActionListener(
+                    new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            demand.setState(DemandState.ACCEPTED);
+                            validButton.setVisible(false);
+                            denyButton.setVisible(false);
+
+                        }
                     }
-                }
-        );
-        validButton.setBounds(x + 190, y+90 , 37, 37);
-        validButton.setBackground(Color.decode("#E8DF96"));
-        validButton.setFocusable(false);
-
-        commandWindow.add(validButton);
-        validButton.setIcon(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/validIcon.png"),0.226f));
+            );
 
 
-        JButton denyButton = new JButton();
-        validButton.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
+            validButton.setBounds(x + 190, y + 90, 37, 37);
+            validButton.setBackground(Color.decode("#E8DF96"));
+            validButton.setFocusable(false);
 
+            fenDemand.add(validButton);
+            validButton.setIcon(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/validIcon.png"), 0.226f));
+
+
+            denyButton.addActionListener(
+                    new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            demand.setState(DemandState.DECLINED);
+                            updateTerminal(MobileApp.getInstance().getDemandList());
+                        }
                     }
-                }
-        );
-        denyButton.setBounds(x + 245, y+90 , 37, 37);
-        denyButton.setBackground(Color.decode("#E8DF96"));
-        denyButton.setFocusable(false);
+            );
+            denyButton.setBounds(x + 245, y + 90, 37, 37);
+            denyButton.setBackground(Color.decode("#E8DF96"));
+            denyButton.setFocusable(false);
 
-        commandWindow.add(denyButton);
-        denyButton.setIcon(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/denyIcon.png"),0.226f));
+            fenDemand.add(denyButton);
+            denyButton.setIcon(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/denyIcon.png"), 0.226f));
+        }
 
-        newImage(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/LittleRectangle.png"),0.75f),x,y, commandWindow);
+        else{
+
+            JButton validButton = new JButton();
+
+            validButton.addActionListener(
+                    new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+
+
+                        }
+                    }
+            );
+
+
+            validButton.setBounds(x + 245, y + 90, 42, 37);
+            validButton.setBackground(Color.decode("#E8DF96"));
+            validButton.setFocusable(false);
+
+            fenDemand.add(validButton);
+            validButton.setText("OK");
+
+
+        }
+        newText(customer,x+30,y+20,16, fenDemand);
+        newText("Price : " + price , x+30,y+60 , 16, fenDemand);
+        newText("Quantity : " + quantity , x+30,y+100 , 16, fenDemand);
+
+        newImage(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/LittleRectangle.png"),0.75f),x,y, fenDemand);
 
     }
 
@@ -567,7 +630,8 @@ public class GraphicalInterface extends JFrame implements Runnable{
 
             buyLumberJack.setText("100 G");
             buyPlanter.setText("100 G");
-            buyDriver.setText("100 G");
+            buyTruck.setText("100 G");
+            buyFoklift.setText("100 G");
 
             upgradeLumberJack.setText(init.wcc.estimatePrice() + " G");
             upgradePlanter.setText(init.planters.estimatePrice() + " G");
@@ -626,9 +690,9 @@ public class GraphicalInterface extends JFrame implements Runnable{
 
     public void createTerminal(){
 
+
+
         commandWindow = new JDialog(new JFrame(), "Command Terminal");
-        // necessary as setDefaultCloseOperation(EXIT_ON_CLOSE) is
-        // not available for JDialogs.
         commandWindow.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
                 unShowTerminal();
@@ -639,6 +703,26 @@ public class GraphicalInterface extends JFrame implements Runnable{
         });
 
 
+        paneDemand = new JScrollPane();
+
+        scrollView = new JLabel();
+
+        scrollView.setPreferredSize( new Dimension( 335, 500 ) );
+        scrollView.setLayout(null);
+        paneDemand.setBackground(Color.BLACK);
+        scrollView.setBackground(Color.BLACK);
+        scrollView.setOpaque(true);
+
+
+
+        paneDemand.setViewportView(scrollView);
+        paneDemand.setSize(355,500);
+
+        paneDemand.setVisible(true);
+        paneDemand.getVerticalScrollBar().setUnitIncrement(8);
+
+        commandWindow.add(paneDemand);
+
         commandWindow.getContentPane().setBackground(Color.black);
         commandWindow.setAlwaysOnTop(true);
         commandWindow.getContentPane().setLayout(null);
@@ -646,8 +730,32 @@ public class GraphicalInterface extends JFrame implements Runnable{
         commandWindow.setLocation(700,20);
         commandWindow.setResizable(false);
 
+    }
+
+    public void updateTerminal(ArrayList<Demand> listDemand){
+
+        scrollView.removeAll();
+
+        int j=0;
+        for(int i=0;i<listDemand.size();i++){
+
+            if (listDemand.get(i).getState()!=DemandState.DECLINED){
+            newDemand(listDemand.get(i),20 ,20 + j * 150,scrollView);
+            j++;
+            }
+        }
+
+        //commandWindow.setVisible(false);
+        //commandWindow.setVisible(true);
+
+        SwingUtilities.updateComponentTreeUI(commandWindow);
+        scrollView.setPreferredSize( new Dimension( 335, j * 160 ) );
 
     }
+
+
+
+
     public void showTerminal(){
         commandWindow.setVisible(true);
     }
