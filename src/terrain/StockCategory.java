@@ -2,6 +2,7 @@ package terrain;
 
 import company.Company;
 import employee.PurchaseUpgrade;
+import wood.Wood;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -96,4 +97,15 @@ public class StockCategory implements PurchaseUpgrade {
         return stockToReturn;
 
     }
+
+    // Remove wood from the stocks with the biggest amount of wood
+    public List<Wood> removeWood(int quantity) {
+        List<Wood> returnList = new ArrayList<>();
+
+        for (int i = 0; i < quantity; i++) {
+            returnList.addAll(this.getStockWithBiggestContent().removeWood(1));
+        }
+        return returnList;
+    }
 }
+
