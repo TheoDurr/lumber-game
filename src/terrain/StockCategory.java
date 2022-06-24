@@ -5,6 +5,7 @@ import employee.PurchaseUpgrade;
 import employee.Woodcutter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class StockCategory implements PurchaseUpgrade {
@@ -15,8 +16,9 @@ public class StockCategory implements PurchaseUpgrade {
 
     private int level;
 
-    public StockCategory(){
+    public StockCategory(Stock firstStock){
         stocks = new ArrayList<Stock>();
+        stocks.add(firstStock);
         level = 1;
     }
 
@@ -43,8 +45,7 @@ public class StockCategory implements PurchaseUpgrade {
 
     @Override
     public void buy() {
-        //TODO give it the same level as the other
-        stocks.add(new Stock());
+        stocks.add(new Stock(this.level));
     }
 
     public int getMaxCapacity(){
@@ -65,11 +66,31 @@ public class StockCategory implements PurchaseUpgrade {
 
     // TODO implement these 2 functions
     public Stock getStockWithSmallestContent(){
-        return this.stocks.get(0);
+        Iterator<Stock> it = stocks.iterator();
+        Stock stockToReturn = stocks.get(0);
+
+        while(it.hasNext()){
+            Stock currentStock = it.next();
+            if(currentStock.getCurrentCapacity() < stockToReturn.getCurrentCapacity()){
+                stockToReturn=currentStock;
+            };
+        }
+
+        return stockToReturn;
     }
 
     public Stock getStockWithBiggestContent(){
-        return this.stocks.get(0);
+        Iterator<Stock> it = stocks.iterator();
+        Stock stockToReturn = stocks.get(0);
+
+        while(it.hasNext()){
+            Stock currentStock = it.next();
+            if(currentStock.getCurrentCapacity() > stockToReturn.getCurrentCapacity()){
+                stockToReturn=currentStock;
+            };
+        }
+
+        return stockToReturn;
 
     }
 }

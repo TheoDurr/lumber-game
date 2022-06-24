@@ -7,7 +7,7 @@ import wood.Wood;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vehicle implements PurchaseUpgrade {
+public class Vehicle {
 
   protected int level;
 
@@ -49,16 +49,8 @@ public class Vehicle implements PurchaseUpgrade {
     return this.level*3;
   }
 
-  public void upgrade(){
-    this.levelUp(1);
-  }
-
-  public void buy(){
-
-  }
-
-
   public void levelUp(int lvl) {
-
+    capacity++;
+    this.level++;
   }
 }

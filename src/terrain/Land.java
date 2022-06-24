@@ -12,8 +12,7 @@ public class Land {
 
     private Stock stock;
 
-    private StockCategory landStocks = new StockCategory();
-    public Land(StockCategory landStocks){
+    public Land(){
         emplacements = new Emplacement[LAND_SIZE+1];
         for(int i = 0; i<LAND_SIZE; i++){
             emplacements[i] = new Emplacement();

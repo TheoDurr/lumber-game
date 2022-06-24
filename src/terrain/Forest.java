@@ -14,10 +14,12 @@ public class Forest extends Terrain {
   private StockCategory stocks;
 
 
-  public Forest(){
+  public Forest(Land firstLand){
     lands = new ArrayList<>(1);
-    stocks = new StockCategory();
-    stocks.addStock(lands.get(0).getStock());
+    stocks = new StockCategory(firstLand.getStock());
+    lands.add(firstLand);
+    System.out.println("1Forest, lands.size" + lands.size());
+
   }
 
   public Land getLandFewestWC(){
@@ -30,7 +32,6 @@ public class Forest extends Terrain {
       if(currentLand.getNbOfWoodcutter()<landToReturn.getNbOfWoodcutter()){
         landToReturn=currentLand;
       };
-      it.remove();
     }
 
     return landToReturn;
@@ -66,5 +67,9 @@ public class Forest extends Terrain {
 
   public Stock getStock(int index) {
     return stocks.getStock(index);
+  }
+
+  public StockCategory getStockCategory(){
+    return stocks;
   }
 }

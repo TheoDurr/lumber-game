@@ -18,19 +18,18 @@ public class VehicleCategory {
 
     private int level;
 
-    StockCategory inputStocks = new StockCategory();
-    StockCategory outputStocks = new StockCategory();
+    StockCategory inputStocks;
+    StockCategory outputStocks;
 
-    DriverCategory drivers = new DriverCategory();
+    DriverCategory drivers = new DriverCategory(inputStocks, outputStocks);
 
 
     public VehicleCategory(StockCategory inputStocks, StockCategory outputStocks, DriverCategory drivers){
         vehicles = new ArrayList<Vehicle>();
         this.inputStocks = inputStocks;
         this.outputStocks = outputStocks;
-        this. drivers = drivers;
+        this.drivers = drivers;
         level = 1;
-        // TODO, inputStock, outputStock et categoryEmployee
     }
 
     public float estimatePrice() {
