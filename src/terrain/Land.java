@@ -26,27 +26,47 @@ public class Land {
     public Stock getStock() {
         return stock;
     }
-
-    public synchronized Emplacement getEmplacementForWC(){
-        for(Emplacement emp : emplacements){
-            if(!emp.isOccupied() && emp.getType()==EmplacementType.TREE && emp.hasTree() && emp.getTree().getState() == TreeState.MATURE){
-                emp.arrives();
-                return emp;
+    private Emplacement getAvailableEmp(boolean forWoodcutter){
+        Emplacement availableEmplacement = null;
+        for (Emplacement emp : emplacements) {
+            if (forWoodcutter ? conditionForWoodcutter(emp) : conditionForPlanter(emp)) {
+                availableEmplacement = emp;
             }
         }
-        return getRestEmplacement();
+        return availableEmplacement;
+    }
+
+    private boolean conditionForWoodcutter(Emplacement emp){
+        return !emp.isOccupied() && emp.getType() == EmplacementType.TREE && emp.hasTree() && emp.getTree().getState() == TreeState.MATURE;
+    }
+
+    private boolean conditionForPlanter(Emplacement emp){
+        return !emp.isOccupied() && emp.getType()==EmplacementType.TREE && !emp.hasTree();
+    }
+
+    public synchronized Emplacement getEmplacementForWC(){
+        Emplacement emp = getAvailableEmp(true);
+        try{
+            while(stock.isFull() || emp == null) {
+                wait();
+                emp = getAvailableEmp(true);
+            }
+        }catch(Exception e){e.printStackTrace();}
+        emp.arrives();
+        return emp;
     }
 
     public synchronized Emplacement getEmplacementForP(){
-        for(Emplacement emp : emplacements){
-            if(!emp.isOccupied() && emp.getType()==EmplacementType.TREE && !emp.hasTree()){
-                emp.arrives();
-                return emp;
+        Emplacement emp = getAvailableEmp(false);
+        try{
+            while(emp == null) {
+                wait();
+                emp = getAvailableEmp(false);
             }
-        }
-        return getRestEmplacement();
+        }catch(Exception e){e.printStackTrace();}
+        emp.arrives();
+        return emp;
     }
-
     public Emplacement getRestEmplacement(){
         return emplacements[LAND_SIZE];
     }
