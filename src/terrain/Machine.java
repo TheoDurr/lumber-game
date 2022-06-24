@@ -14,7 +14,7 @@ import java.util.List;
 import static java.lang.Thread.sleep;
 
 
-public class Machine extends Factory implements Runnable, PurchaseUpgrade {
+public class Machine extends Factory implements Runnable {
 
 
     private String name;
@@ -117,37 +117,4 @@ public class Machine extends Factory implements Runnable, PurchaseUpgrade {
         this.level += lvl;
         speed += 1;
     }
-
-
-    @Override
-    public float estimatePrice() {
-        return 0;
-    }
-
-    @Override
-    public void upgrade() {
-
-    }
-
-    @Override
-    public void buy() {
-
-    }
-
-
-    /*
-    public float estimatePrice(){
-        return this.speed*3;
-    }
-
-    public void upgrade(){
-        this.speed++;
-    }
-
-
-    public void buy(){
-        this.capacity++;
-    }
-    */
-
 }
