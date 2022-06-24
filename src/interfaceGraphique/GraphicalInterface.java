@@ -5,12 +5,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import initialisation.Initialisation;
 
 
 public class GraphicalInterface extends JFrame implements Runnable{
-
 
     public Initialisation init;
 
@@ -61,12 +62,22 @@ public class GraphicalInterface extends JFrame implements Runnable{
     JButton upgradeCommandStock;
 
 
+    JDialog commandWindow;
+
+    JButton seeTerminal;
+    JButton hideTerminal;
+
+
     public void createInterface() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(null);
         this.getContentPane().setBackground(Color.decode("#DDD168"));
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setUndecorated(true);
+
+        createTerminal();
+
+        newDemand("Harry" , 13, 20 ,20,20);
 
 
         ImageIcon bigRectangle = resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/BigRectangle.png"),0.75f);
@@ -89,14 +100,64 @@ public class GraphicalInterface extends JFrame implements Runnable{
         ImageIcon goldIcon = resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/money.png"),0.70f);
         ImageIcon upgradeIcon = resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/upgrade.png"),0.60f);
 
+        ImageIcon terminalUnShow = resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/terminalUnShow.png"),0.10f);
+        ImageIcon terminalShow = resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/terminalShow.png"),0.10f);
+
+        Thread threadAffiche = new Thread(this);
 
 
         //Player Part
         closeButton();
-        amountMoney = newText(": " + company.Company.getCashFlow(),100 + company.Company.getName().length()*30,14,28);
+
         newImage(goldIcon,60 + company.Company.getName().length()*30,15);
 
+
+        seeTerminal = new JButton();
+
+        seeTerminal.setIcon(terminalUnShow);
+        seeTerminal.setBounds(1280, 15, 40, 50);
+        seeTerminal.setBackground(Color.decode("#E8DF96"));
+        seeTerminal.setFocusable(false);
+        seeTerminal.setRolloverIcon(terminalShow);
+
+        this.add(seeTerminal);
+
+
+        hideTerminal = new JButton();
+
+        seeTerminal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showTerminal();
+                hideTerminal.setVisible(true);
+                seeTerminal.setVisible(false);
+
+            }
+        });
+
+        hideTerminal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                unShowTerminal();
+                seeTerminal.setVisible(true);
+                hideTerminal.setVisible(false);
+
+            }
+        });
+        hideTerminal.setIcon(terminalShow);
+        hideTerminal.setBounds(1280, 15, 40, 50);
+        hideTerminal.setBackground(Color.decode("#E8DF96"));
+        hideTerminal.setFocusable(false);
+        hideTerminal.setRolloverIcon(terminalUnShow);
+        hideTerminal.setVisible(false);
+        this.add(hideTerminal);
+
+
+
+        amountMoney = newText(": " + company.Company.getCashFlow(),100 + company.Company.getName().length()*30,14,28);
         newText(company.Company.getName(),30,5,35);
+
+        newText("Access to command : ",950,20,30);
 
 
 
@@ -312,7 +373,8 @@ public class GraphicalInterface extends JFrame implements Runnable{
     }
 
 
-    public JLabel newImage(ImageIcon image,int x,int y){
+
+    public JLabel newImage(ImageIcon image,int x,int y ){
         JLabel picLabel = new JLabel();
         picLabel.setIcon(image);
         picLabel.setLocation(x, y);
@@ -321,8 +383,18 @@ public class GraphicalInterface extends JFrame implements Runnable{
         return picLabel;
     }
 
+    public JLabel newImage(ImageIcon image,int x,int y, JDialog target){
+        JLabel picLabel = new JLabel();
+        picLabel.setIcon(image);
+        picLabel.setLocation(x, y);
+        picLabel.setSize(image.getIconWidth(), image.getIconHeight());
+        target.add(picLabel);
+        return picLabel;
+    }
 
-    public JTextArea newText(String text,int x,int y,int size){
+
+
+    public JTextArea newText(String text, int x, int y, int size ){
         JTextArea textArea = new JTextArea();
         textArea.setText(text);
         textArea.setEditable(false);
@@ -333,18 +405,22 @@ public class GraphicalInterface extends JFrame implements Runnable{
         return textArea;
     }
 
+    public JTextArea newText(String text, int x, int y, int size, JDialog target ){
+        JTextArea textArea = new JTextArea();
+        textArea.setText(text);
+        textArea.setEditable(false);
+        textArea.setBounds(x,y, 10*size*text.length(), size*2);
+        textArea.setFont(new Font("Inter",Font.ITALIC, size));
+        textArea.setOpaque(false);
+        target.add(textArea);
+        return textArea;
+    }
+
 
 
     public JButton newAddButton(int x,int y){
         JButton button = new JButton("Buy");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(y);
-            }
-        });
         button.setIcon(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/plus.png"),0.70f));
-        //button.setRolloverIcon(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/money.png"),0.70f));
         button.setBounds(x, y, 140, 30);
         button.setBackground(Color.decode("#E8DF96"));
         button.setFocusable(false);
@@ -355,12 +431,6 @@ public class GraphicalInterface extends JFrame implements Runnable{
 
     public JButton newUpgradeButton(int x,int y){
         JButton button = new JButton("Upgrade");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
         button.setIcon(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/upgrade.png"),0.70f));
         button.setBounds(x, y, 140, 30);
         button.setBackground(Color.decode("#E8DF96"));
@@ -430,6 +500,47 @@ public class GraphicalInterface extends JFrame implements Runnable{
                                                                                  //        2 = salary
     }
 
+    public void newDemand(String customer, int price, int quantity,int x,int y){
+        newText(customer,x+30,y+20,16, commandWindow);
+        newText("Price : " + price , x+30,y+60 , 16, commandWindow);
+        newText("Quantity : " + quantity , x+110,y+60 , 16, commandWindow);
+        JButton validButton = new JButton();
+        validButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                    }
+                }
+        );
+        validButton.setBounds(x + 190, y+90 , 37, 37);
+        validButton.setBackground(Color.decode("#E8DF96"));
+        validButton.setFocusable(false);
+
+        commandWindow.add(validButton);
+        validButton.setIcon(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/validIcon.png"),0.226f));
+
+
+        JButton denyButton = new JButton();
+        validButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                    }
+                }
+        );
+        denyButton.setBounds(x + 245, y+90 , 37, 37);
+        denyButton.setBackground(Color.decode("#E8DF96"));
+        denyButton.setFocusable(false);
+
+        commandWindow.add(denyButton);
+        denyButton.setIcon(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/denyIcon.png"),0.226f));
+
+        newImage(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/LittleRectangle.png"),0.75f),x,y, commandWindow);
+
+    }
+
 
     @Override
     public void run() {
@@ -486,14 +597,14 @@ public class GraphicalInterface extends JFrame implements Runnable{
 
 
 
-            //Stock   ______________________________________________________________________!!!!!!!!!!!!!!
-            partOverlay(0,earthStockOverlay).setText( " A voir  !!!!! / ");
+            //Stock
+            partOverlay(0,earthStockOverlay).setText(init.landStocks.getCurrentCapacity() + " / " + init.landStocks.getMaxCapacity());
 
-            partOverlay(0,bfMachineStockOverlay).setText("34 / 435");
+            partOverlay(0,bfMachineStockOverlay).setText(init.inputMachineStocks.getCurrentCapacity() + " / " + init.inputMachineStocks.getMaxCapacity());
 
-            partOverlay(0,aftMachineStockOverlay).setText( "34 / 435");
+            partOverlay(0,aftMachineStockOverlay).setText(init.outputMachineStocks.getCurrentCapacity() + " / " + init.outputMachineStocks.getMaxCapacity());
 
-            partOverlay(0,commandStockOverlay).setText("34 / 435");
+            partOverlay(0,commandStockOverlay).setText(init.commandStocks.getCurrentCapacity() + " / " + init.commandStocks.getMaxCapacity());
 
 
             upgradeEarthStock.setText(init.landStocks.estimatePrice() + " G");
@@ -502,14 +613,54 @@ public class GraphicalInterface extends JFrame implements Runnable{
             upgradeCommandStock.setText(init.commandStocks.estimatePrice() + " G");
 
 
+
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ie) {
+                // ...
+            }
+
         }
 
     }
 
+    public void createTerminal(){
+
+        commandWindow = new JDialog(new JFrame(), "Command Terminal");
+        // necessary as setDefaultCloseOperation(EXIT_ON_CLOSE) is
+        // not available for JDialogs.
+        commandWindow.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                unShowTerminal();
+
+                seeTerminal.setVisible(true);
+                hideTerminal.setVisible(false);
+            }
+        });
+
+
+        commandWindow.getContentPane().setBackground(Color.black);
+        commandWindow.setAlwaysOnTop(true);
+        commandWindow.getContentPane().setLayout(null);
+        commandWindow.setSize(350, 500);
+        commandWindow.setLocation(700,20);
+        commandWindow.setResizable(false);
+
+
+    }
+    public void showTerminal(){
+        commandWindow.setVisible(true);
+    }
+
+    public void unShowTerminal(){
+        commandWindow.setVisible(false);
+    }
+
 
     public void startDisplay(){
-        Thread t = new Thread(this);
+        Thread threadAffiche = new Thread(this);
+
         //this will call the method run
-        t.start();
+        threadAffiche.start();
     }
 }
