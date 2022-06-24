@@ -39,8 +39,8 @@ public class Driver extends Employee implements Runnable {
   }
 
   public void drive() {
-    this.vehicle.retrieveWood(departureStock);
 
+    this.vehicle.retrieveWood(departureStock);
     try {
       Thread.sleep(timeToDrive());
     } catch (InterruptedException e) {}

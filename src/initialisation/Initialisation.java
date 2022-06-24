@@ -123,9 +123,13 @@ public class Initialisation {
         //== Add one truck to truckCategory
         Vehicle truck1 = new Truck();
 
-        Employee truckDriver1 = new Driver(land.getStock(), machineInputStock, truck1,1);
+        Driver truckDriver1 = new Driver(land.getStock(), machineInputStock, truck1,1);
         truckDrivers.addEmployee(truckDriver1);
         truckDrivers.start();
+
+        truck1.setDriver(truckDriver1);
+
+        truckDriver1.startWorking();
 
 
         //== Machine part
@@ -138,11 +142,16 @@ public class Initialisation {
         Stock commandStock = new Stock();
         Vehicle forklift1 = new Forklift();
 
-        Employee forkliftDriver1 = new Driver(machineOutputStock, commandStock, forklift1,1);
+        Driver forkliftDriver1 = new Driver(machineOutputStock, commandStock, forklift1,1);
         forkliftDrivers.addEmployee(forkliftDriver1);
         forkliftDrivers.start();
 
+        forklift1.setDriver(forkliftDriver1);
 
+        forkliftDriver1.startWorking();
+
+
+        //== Generate graphical interface
         GraphicalInterface Interface = new GraphicalInterface(this);
 
         try {
