@@ -20,6 +20,14 @@ public class StockCategory implements PurchaseUpgrade {
         level = 1;
     }
 
+    public void addStock(Stock stock){
+        stocks.add(stock);
+    }
+
+    public Stock getStock(int index){
+        return stocks.get(index);
+    }
+
     @Override
     public float estimatePrice() {
         return (float) (PRICE_MULT*Math.pow(level,2));
@@ -37,5 +45,21 @@ public class StockCategory implements PurchaseUpgrade {
     public void buy() {
         //TODO give it the same level as the other
         stocks.add(new Stock());
+    }
+
+    public int getMaxCapacity(){
+        int maxCapacityTot=0;
+        for (int counter = 0; counter < stocks.size(); counter++) {
+            maxCapacityTot += stocks.get(counter).getMaxCapacity();
+        }
+        return maxCapacityTot;
+    }
+
+    public int getCurrentCapacity(){
+        int maxCurrentCapTot=0;
+        for (int counter = 0; counter < stocks.size(); counter++) {
+            maxCurrentCapTot += stocks.get(counter).getCurrentCapacity();
+        }
+        return maxCurrentCapTot;
     }
 }

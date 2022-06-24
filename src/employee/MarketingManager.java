@@ -9,7 +9,6 @@ import java.util.Random;
 public class MarketingManager extends Employee implements PurchaseUpgrade {
 
     private static final int PRICE_MULT = 500;
-
     private int level = 1;
     private float creationCost;
     private float maintenanceCost;
@@ -31,9 +30,9 @@ public class MarketingManager extends Employee implements PurchaseUpgrade {
         return creationCost;
     }
 
+
     public float getMaintenanceCost() {
         return maintenanceCost;
-    }
 
     private void levelUp(int lvl) {
         level += lvl;

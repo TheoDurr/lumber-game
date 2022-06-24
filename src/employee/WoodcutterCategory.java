@@ -1,41 +1,52 @@
 package employee;
 
 import company.Company;
+import terrain.Forest;
 import terrain.Land;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WoodcutterCategory implements PurchaseUpgrade {
+public class WoodcutterCategory extends EmployeeCategory implements PurchaseUpgrade {
 
 
     private static final int PRICE_MULT = 100;
-
-    private List<Woodcutter> woodcutters;
     private int level;
 
-
+    private Forest forest;
 
 
     public WoodcutterCategory() {
-        woodcutters = new ArrayList<Woodcutter>();
+        super();
         level = 1;
     }
 
+    public WoodcutterCategory(Forest forest) {
+        this();
+        this.forest = forest;
+    }
+
     public void startWorking(){
-        woodcutters.forEach((woodcutter)->woodcutter.startWorking());
+        employees.forEach((woodcutter)->((Woodcutter)woodcutter).startWorking());
     }
 
     public void setLand(Land l){
-        woodcutters.forEach((woodcutter)->woodcutter.setLand(l));
+        employees.forEach((woodcutter)->((Woodcutter)woodcutter).setLand(l));
     }
 
     public float getSalary(){
         float sumSalary=0;
-        for(Woodcutter wc : woodcutters){
+        for(Employee wc : employees){
             sumSalary += wc.getSalary();
         }
         return sumSalary;
+    }
+    public int getNumber(){
+        return employees.size();
+    }
+
+    public int getLevel(){
+        return level;
     }
 
     @Override
@@ -48,11 +59,17 @@ public class WoodcutterCategory implements PurchaseUpgrade {
         Company.pay(estimatePrice());
         level++;
         //For each element of woodcutters, we set the new speed
-        woodcutters.forEach( (woodcutter) -> woodcutter.levelUp(1));
+        employees.forEach( (woodcutter) -> ((Woodcutter)woodcutter).levelUp(1));
     }
 
     @Override
     public void buy() {
-        woodcutters.add(new Woodcutter(Integer.toString(woodcutters.size()),level,1));
+        Woodcutter wc = new Woodcutter(Integer.toString(employees.size()),level);
+        Land landToSet = forest.getLandFewestWC();
+        landToSet.newWoodcutter();
+        //We set the land with the fewest woodcutter on it
+        wc.setLand(landToSet);
+        wc.startWorking();
+        employees.add(wc);
     }
 }

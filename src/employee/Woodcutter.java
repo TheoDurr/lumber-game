@@ -1,8 +1,6 @@
 package employee;
 
-import terrain.Emplacement;
-import terrain.EmplacementType;
-import terrain.Land;
+import terrain.*;
 import wood.Wood;
 import java.util.List;
 import java.util.Random;
@@ -22,13 +20,12 @@ public class Woodcutter extends Employee implements Runnable {
   private int efficiency;
 
   //Land on which the woodcutter work
-  private
-  Land land;
+  private Land land;
 
   //Specific emplacement on which the woodcutter is either cutting a tree or waiting for work
   private Emplacement emplacement;
 
-  public Woodcutter(String name, int level, int efficiency){
+  public Woodcutter(String name, int level){
     this.name = name;
     this.level = level;
     this.statGenerator = new Random();
@@ -36,7 +33,13 @@ public class Woodcutter extends Employee implements Runnable {
     this.speedGrowth = statGenerator.nextInt(5)+2;
     this.setSalary(statGenerator.nextFloat()*500+1200);
     this.curSpeed = baseSpeed + speedGrowth*level;
-    this.efficiency = efficiency;
+    this.efficiency = statGenerator.nextInt(10);
+  }
+
+  public Woodcutter(String name, int level, Land land){
+    this(name,level);
+    this.land = land;
+    emplacement = land.getRestEmplacement();
   }
 
   public void levelUp(int lvl) {
@@ -73,8 +76,11 @@ public class Woodcutter extends Employee implements Runnable {
     //We change the state of the tree he just cut
     emplacement.getTree().nextState();
 
-    //We add the tree to the stock associated to the land
-    land.getStock().addWood(emplacement.getTree());
+    //There is a probability that the woodcutter destroy the tree depending on his efficiency
+    if(statGenerator.nextInt(100)>efficiency){
+      //We add the tree to the stock associated to the land
+      land.getStock().addWood(emplacement.getTree());
+    }
     System.out.println("Land stock number of trunks : " + land.getStock().getCurrentCapacity());
 
 

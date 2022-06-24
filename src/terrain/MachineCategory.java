@@ -19,6 +19,14 @@ public class MachineCategory implements PurchaseUpgrade {
         level = 1;
     }
 
+    public int getNumber(){
+        return machines.size();
+    }
+
+    public int getLevel(){
+        return level;
+    }
+
     @Override
     public float estimatePrice() {
         return (float) (PRICE_MULT*Math.pow(level,2));
