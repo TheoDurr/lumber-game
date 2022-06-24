@@ -13,7 +13,7 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
 
     private float maintenanceCost;
 
-    private List<Demand> demandList;
+    private ArrayList<Demand> demandList;
 
     private boolean isUnlocked;
 
@@ -175,7 +175,7 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
         this.maintenanceCost = maintenanceCost;
     }
 
-    public List<Demand> getDemandList() {
+    public ArrayList<Demand> getDemandList() {
         return demandList;
     }
 
