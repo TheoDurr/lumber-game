@@ -2,6 +2,7 @@ package company;
 
 import demand.Customer;
 import terrain.Stock;
+import terrain.StockCategory;
 
 public final class Company {
 
@@ -18,14 +19,16 @@ public final class Company {
     private static Customer[] customerBook;
 
     //TODO: @AlexisB edit this to stock category
-    private static Stock finalStock = new Stock();
 
-    public static void init(String name, String CEO, String pays, Customer[] customerBook, float baseCashFlow) {
+    private static StockCategory finalStocks;
+
+    public static void init(String name, String CEO, String pays, Customer[] customerBook, float baseCashFlow, Stock initialFinalStock) {
         Company.name = name;
         Company.CEO = CEO;
         Company.pays = pays;
         Company.customerBook = customerBook;
         Company.cashFlow = baseCashFlow;
+        finalStocks = new StockCategory(initialFinalStock);
     }
 
     public static boolean pay(float amount) {
@@ -37,8 +40,8 @@ public final class Company {
         }
     }
 
-    public static Stock getFinalStock() {
-        return Company.finalStock;
+    public static StockCategory getFinalStockCategory() {
+        return Company.finalStocks;
     }
 
     public void cashIn(float amount) {

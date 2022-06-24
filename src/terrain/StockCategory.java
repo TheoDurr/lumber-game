@@ -3,6 +3,7 @@ package terrain;
 import company.Company;
 import employee.PurchaseUpgrade;
 import employee.Woodcutter;
+import wood.Wood;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -64,7 +65,6 @@ public class StockCategory implements PurchaseUpgrade {
         return maxCurrentCapTot;
     }
 
-    // TODO implement these 2 functions
     public Stock getStockWithSmallestContent(){
         Iterator<Stock> it = stocks.iterator();
         Stock stockToReturn = stocks.get(0);
@@ -93,4 +93,17 @@ public class StockCategory implements PurchaseUpgrade {
         return stockToReturn;
 
     }
+
+    // Remove wood from the stocks with the biggest amount of wood
+    public List<Wood> removeWood(int quantity){
+        List<Wood> returnList = new ArrayList<>();
+
+        for(int i = 0 ; i < quantity  ; i++){
+            returnList.addAll(this.getStockWithBiggestContent().removeWood(1));
+        }
+        return returnList;
+    }
+
+
+
 }

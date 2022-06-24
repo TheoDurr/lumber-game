@@ -62,6 +62,7 @@ public class Initialisation {
         //== Example of company creation (everything is static)
         //FIXME: these information are placeholders for now.
 
+        Stock initialFinalStock = new Stock();
         this.machines = machines ;
         Company.init(
                 "Test company",
@@ -77,7 +78,8 @@ public class Initialisation {
                         new Customer("Customer5"),
                         new Customer("Customer6")
                 },
-                150000
+                150000,
+                initialFinalStock
         );
 
         //== Terminals creation
