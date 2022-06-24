@@ -44,11 +44,11 @@ public final class Company {
         return Company.finalStocks;
     }
 
-    public void cashIn(float amount) {
+    public static void cashIn(float amount) {
         cashFlow += amount;
     }
 
-    public void payInPlanks(int amountInPlank) {
+    public static void payInPlanks(int amountInPlank) {
         nbPlank -= amountInPlank;
     }
 
@@ -68,7 +68,7 @@ public final class Company {
         return cashFlow;
     }
 
-    public int getNbPlank() {
+    public static int getNbPlank() {
         return nbPlank;
     }
 

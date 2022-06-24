@@ -1,6 +1,7 @@
 package interfaceGraphique;
 
 
+import company.Company;
 import demand.Demand;
 import demand.DemandState;
 import demand.MobileApp;
@@ -246,7 +247,7 @@ public class GraphicalInterface extends JFrame implements Runnable {
         buyTruck.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                init.truckDrivers.buy();
+                init.trucks.buy();
             }
         });
 
@@ -254,7 +255,7 @@ public class GraphicalInterface extends JFrame implements Runnable {
         upgradeTruck.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                init.trucks.buy();
+                init.trucks.upgrade();
             }
         });
 
@@ -262,7 +263,7 @@ public class GraphicalInterface extends JFrame implements Runnable {
         buyFoklift.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                init.truckDrivers.buy();
+                init.forklifts.buy();
             }
         });
         upgradeForklift = newUpgradeButton(565, 400);
@@ -507,6 +508,26 @@ public class GraphicalInterface extends JFrame implements Runnable {
         float price = demand.getPrice();
         int quantity = demand.getQuantity();
 
+        JButton okButton = new JButton();
+
+        okButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        demand.setState(DemandState.COMPLETED);
+                        company.Company.cashIn(demand.getPrice());
+                        company.Company.payInPlanks(demand.getQuantity());
+                        updateTerminal(MobileApp.getInstance().getDemandList());
+                    }
+                }
+        );
+
+
+        okButton.setBounds(x + 225, y + 85, 70, 40);
+        okButton.setBackground(Color.decode("#E8DF96"));
+        okButton.setFocusable(false);
+        okButton.setText("OK");
+
 
         if (demand.getState() != DemandState.ACCEPTED) {
             JButton validButton = new JButton();
@@ -520,7 +541,8 @@ public class GraphicalInterface extends JFrame implements Runnable {
                             demand.setState(DemandState.ACCEPTED);
                             validButton.setVisible(false);
                             denyButton.setVisible(false);
-
+                            fenDemand.add(okButton);
+                            updateTerminal(MobileApp.getInstance().getDemandList());
                         }
                     }
             );
@@ -550,29 +572,10 @@ public class GraphicalInterface extends JFrame implements Runnable {
             fenDemand.add(denyButton);
             denyButton.setIcon(resize(new ImageIcon("src/interfaceGraphique/IconHolzmann/denyIcon.png"), 0.226f));
         } else {
-
-            JButton validButton = new JButton();
-
-            validButton.addActionListener(
-                    new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-
-
-                        }
-                    }
-            );
-
-
-            validButton.setBounds(x + 245, y + 90, 42, 37);
-            validButton.setBackground(Color.decode("#E8DF96"));
-            validButton.setFocusable(false);
-
-            fenDemand.add(validButton);
-            validButton.setText("OK");
-
-
+            fenDemand.add(okButton);
         }
+
+
         newText(customer, x + 30, y + 20, 16, fenDemand);
         newText("Price : " + price, x + 30, y + 60, 16, fenDemand);
         newText("Quantity : " + quantity, x + 30, y + 100, 16, fenDemand);
@@ -593,8 +596,8 @@ public class GraphicalInterface extends JFrame implements Runnable {
             partOverlay(1, lumberJackEmployeeOverlay).setText("Level : " + init.wcc.getLevel());
             partOverlay(2, lumberJackEmployeeOverlay).setText("Salary : " + init.wcc.getSalary() + " / month");
 
-            partOverlay(0, driverEmployeeOverlay).setText("Number : " + init.truckDrivers.getNumber() + init.forkliftDrivers.getNumber());
-            partOverlay(1, driverEmployeeOverlay).setText("Level : " + "A voir !!!");
+            partOverlay(0, driverEmployeeOverlay).setText("Number : " + (init.truckDrivers.getNumber() + init.forkliftDrivers.getNumber()));
+            partOverlay(1, driverEmployeeOverlay).setText("Level : " + init.truckDrivers.getLevel());
             partOverlay(2, driverEmployeeOverlay).setText("Salary : " + init.truckDrivers.getSalary() + " / month");
 
             partOverlay(0, planterEmployeeOverlay).setText("Number :" + init.planters.getNumber());
@@ -617,11 +620,11 @@ public class GraphicalInterface extends JFrame implements Runnable {
 
 
             // ---  Vehicle  ---
-            partOverlay(0, truckVehicleOverlay).setText("Number : " + init.trucks.getNumber());
+            partOverlay(0, truckVehicleOverlay).setText("Number : " + init.truckDrivers.getNumber());
             partOverlay(1, truckVehicleOverlay).setText("Level : " + init.trucks.getLevel());
 
-            partOverlay(0, forkliftVehicleOverlay).setText("Number :" + init.forklifts.getNumber());
-            partOverlay(1, forkliftVehicleOverlay).setText("Level :" + init.trucks.getLevel());
+            partOverlay(0, forkliftVehicleOverlay).setText("Number :" + init.forkliftDrivers.getNumber());
+            partOverlay(1, forkliftVehicleOverlay).setText("Level :" + init.forklifts.getLevel());
 
             upgradeTruck.setText(init.trucks.estimatePrice() + " G");
             upgradeForklift.setText(init.forklifts.estimatePrice() + " G");
