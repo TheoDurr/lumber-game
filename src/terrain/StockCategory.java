@@ -20,6 +20,10 @@ public class StockCategory implements PurchaseUpgrade {
         level = 1;
     }
 
+    public void addStock(Stock stock){
+        this.stocks.add(stock);
+    }
+
     @Override
     public float estimatePrice() {
         return (float) (PRICE_MULT*Math.pow(level,2));
@@ -53,5 +57,15 @@ public class StockCategory implements PurchaseUpgrade {
             maxCurrentCapTot += stocks.get(counter).getCurrentCapacity();
         }
         return maxCurrentCapTot;
+    }
+
+    // TODO implement these 2 functions
+    public Stock getStockWithSmallestContent(){
+        return this.stocks.get(0);
+    }
+
+    public Stock getStockWithBiggestContent(){
+        return this.stocks.get(0);
+
     }
 }

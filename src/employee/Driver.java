@@ -1,6 +1,7 @@
 package employee;
 
 import terrain.Stock;
+import terrain.StockCategory;
 import vehicle.Vehicle;
 
 import java.util.Random;
@@ -9,10 +10,10 @@ public class Driver extends Employee implements Runnable {
 
   private boolean isWorking;
   //terrain.Stock where the wood is taken
-  private Stock departureStock;
+  private StockCategory inputStocks;
 
   //terrain.Stock where the wood is brought
-  private Stock destinationStock;
+  private StockCategory outputStocks;
 
   private Vehicle vehicle;
 
@@ -23,10 +24,10 @@ public class Driver extends Employee implements Runnable {
   private int speedGrowth;
 
 
-  public Driver(Stock departureStock, Stock destinationStock, Vehicle vehicle,int level) {
+  public Driver(StockCategory inputStocks, StockCategory outputStocks, Vehicle vehicle,int level) {
     super();
-    this.departureStock = departureStock;
-    this.destinationStock = destinationStock;
+    this.inputStocks = inputStocks;
+    this.outputStocks = outputStocks;
     this.vehicle = vehicle;
     this.level = level;
 
@@ -40,12 +41,12 @@ public class Driver extends Employee implements Runnable {
 
   public void drive() {
 
-    this.vehicle.retrieveWood(departureStock);
+    this.vehicle.retrieveWood(inputStocks.getStockWithBiggestContent());
     try {
       Thread.sleep(timeToDrive());
     } catch (InterruptedException e) {}
 
-    this.vehicle.dropWood(destinationStock);
+    this.vehicle.dropWood(outputStocks.getStockWithSmallestContent());
   }
 
   private int timeToDrive(){

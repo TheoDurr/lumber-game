@@ -19,22 +19,29 @@ import java.util.List;
 public class Initialisation {
 
 
-    // List of all categories in the game
+    // Employee categories
     public WoodcutterCategory wcc = new WoodcutterCategory();
     public EmployeeCategory planters = new PlanterCategory();
-    public EmployeeCategory truckDrivers = new DriverCategory();
-    public EmployeeCategory forkliftDrivers = new DriverCategory();
+    public DriverCategory truckDrivers = new DriverCategory();
+    public DriverCategory forkliftDrivers = new DriverCategory();
     public MarketingManager marketingManager = new MarketingManager();
 
-    public VehicleCategory trucks = new VehicleCategory();
-    public VehicleCategory forklifts = new VehicleCategory();
 
-    public MachineCategory machines = new MachineCategory();
-
+    // Stock categories
     public StockCategory landStocks = new StockCategory();
     public StockCategory inputMachineStocks = new StockCategory();
     public StockCategory outputMachineStocks = new StockCategory();
     public StockCategory commandStocks = new StockCategory();
+
+
+    // Vehicle categories
+    public VehicleCategory trucks = new VehicleCategory(landStocks, inputMachineStocks, truckDrivers);
+    public VehicleCategory forklifts = new VehicleCategory(outputMachineStocks, commandStocks, forkliftDrivers);
+
+
+    public MachineCategory machines = new MachineCategory();
+
+
 
 
 
@@ -98,7 +105,7 @@ public class Initialisation {
 
 
         //We create a new land with 2 woodcutters on it
-        Land land = new Land();
+        Land land = new Land(landStocks);
         wcc.buy();
         wcc.buy();
         wcc.setLand(land);

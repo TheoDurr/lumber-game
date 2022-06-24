@@ -7,7 +7,7 @@ import wood.Wood;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Vehicle implements PurchaseUpgrade {
+public class Vehicle implements PurchaseUpgrade {
 
   protected int level;
 
@@ -20,6 +20,11 @@ public abstract class Vehicle implements PurchaseUpgrade {
   public Vehicle(){
     this.level = 1;
     wContent = new ArrayList<Wood>();
+  }
+  public Vehicle(int level){
+    this.level = level;
+    wContent = new ArrayList<Wood>();
+
   }
 
   // Set the driver associated to the vehicle
@@ -53,5 +58,7 @@ public abstract class Vehicle implements PurchaseUpgrade {
   }
 
 
-  public abstract void levelUp(int lvl) ;
+  public void levelUp(int lvl) {
+
+  }
 }

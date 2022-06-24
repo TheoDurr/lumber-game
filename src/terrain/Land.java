@@ -1,6 +1,5 @@
 package terrain;
 
-import terrain.Stock;
 import wood.TreeState;
 
 public class Land {
@@ -10,7 +9,8 @@ public class Land {
 
     private Stock stock;
 
-    public Land(){
+    private StockCategory landStocks = new StockCategory();
+    public Land(StockCategory landStocks){
         emplacements = new Emplacement[LAND_SIZE+1];
         for(int i = 0; i<LAND_SIZE; i++){
             emplacements[i] = new Emplacement();
