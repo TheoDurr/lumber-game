@@ -1,6 +1,7 @@
 package employee;
 
 import company.Company;
+import terrain.Forest;
 import terrain.Land;
 
 import java.util.ArrayList;
@@ -12,10 +13,17 @@ public class WoodcutterCategory extends EmployeeCategory implements PurchaseUpgr
     private static final int PRICE_MULT = 100;
     private int level;
 
+    private Forest forest;
+
 
     public WoodcutterCategory() {
         super();
         level = 1;
+    }
+
+    public WoodcutterCategory(Forest forest) {
+        this();
+        this.forest = forest;
     }
 
     public void startWorking(){
@@ -29,7 +37,7 @@ public class WoodcutterCategory extends EmployeeCategory implements PurchaseUpgr
     public float getSalary(){
         float sumSalary=0;
         for(Employee wc : employees){
-            sumSalary += ((Woodcutter)wc).getSalary();
+            sumSalary += wc.getSalary();
         }
         return sumSalary;
     }
@@ -56,6 +64,12 @@ public class WoodcutterCategory extends EmployeeCategory implements PurchaseUpgr
 
     @Override
     public void buy() {
-        employees.add(new Woodcutter(Integer.toString(employees.size()),level));
+        Woodcutter wc = new Woodcutter(Integer.toString(employees.size()),level);
+        Land landToSet = forest.getLandFewestWC();
+        landToSet.newWoodcutter();
+        //We set the land with the fewest woodcutter on it
+        wc.setLand(landToSet);
+        wc.startWorking();
+        employees.add(wc);
     }
 }

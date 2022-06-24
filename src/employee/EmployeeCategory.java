@@ -36,4 +36,6 @@ public class EmployeeCategory extends Thread{
         public void addEmployee(Employee employee){
             employees.add(employee);
         }
+
+        public void startWorking(){}
 }
