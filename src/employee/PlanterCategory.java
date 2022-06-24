@@ -72,6 +72,5 @@ public class PlanterCategory extends EmployeeCategory implements PurchaseUpgrade
         planter.setLand(landToSet);
         planter.startWorking();
         employees.add(planter);
-        System.out.println("Planter bought@");
     }
 }

@@ -49,18 +49,19 @@ public class MachineCategory implements MachinePurchaseUpgrade {
         machines.forEach((machine) -> machine.levelUp(1));
     }
 
-    @Override
-    public void buy() {
-
-    }
-
     /**
      * Adds a new machine
      *
      * @param inputStock  the input stock of the machine
      * @param outputStock the output stock of the machine
      */
-    public void buy(Stock inputStock, Stock outputStock) {
-        machines.add(new Machine(Integer.toString(getNumber()), level, inputStock, outputStock));
+    public void buy(StockCategory inputStock, StockCategory outputStock) {
+        Stock machineInputStock = new Stock(inputStock.getLevel());
+        inputStock.addStock(machineInputStock);
+        Stock machineOutputStock = new Stock(outputStock.getLevel());
+        outputStock.addStock(machineOutputStock);
+
+        machines.add(new Machine(Integer.toString(getNumber()), level, machineInputStock, machineOutputStock));
+        System.out.println("Machine bought");
     }
 }

@@ -296,7 +296,7 @@ public class GraphicalInterface extends JFrame implements Runnable {
         buyMachine.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                init.machines.buy();
+                init.machines.buy(init.inputMachineStocks, init.outputMachineStocks);
             }
         });
         upgradeMachine = newUpgradeButton(935, 250);
