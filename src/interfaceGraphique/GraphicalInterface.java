@@ -211,6 +211,7 @@ public class GraphicalInterface extends JFrame implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 init.truckDrivers.upgrade();
+                init.forkliftDrivers.upgrade();
             }
         });
         upgradeMarket = newUpgradeButton(195, 700);
@@ -598,6 +599,7 @@ public class GraphicalInterface extends JFrame implements Runnable {
 
             partOverlay(0, driverEmployeeOverlay).setText("Number : " + (init.truckDrivers.getNumber() + init.forkliftDrivers.getNumber()));
             partOverlay(1, driverEmployeeOverlay).setText("Level : " + init.truckDrivers.getLevel());
+
             partOverlay(2, driverEmployeeOverlay).setText("Salary : " + init.truckDrivers.getSalary() + " / month");
 
             partOverlay(0, planterEmployeeOverlay).setText("Number :" + init.planters.getNumber());

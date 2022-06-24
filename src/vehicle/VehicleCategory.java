@@ -37,8 +37,10 @@ public class VehicleCategory {
     }
 
     public void upgrade() {
-        Company.pay(estimatePrice());
-        level++;
+        if(Company.pay(estimatePrice(){
+            level++;
+
+        }
         //For each element of woodcutters, we set the new speed
         vehicles.forEach( (vehicle) -> vehicle.levelUp(1));
     }

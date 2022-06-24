@@ -36,6 +36,7 @@ public final class Company {
             return false;
         } else {
             cashFlow -= amount;
+            System.out.println("COUCUOUOCUOCUOCUOCUOUOCUO");
             return true;
         }
     }

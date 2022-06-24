@@ -56,9 +56,11 @@ public class Forest extends Terrain {
   }
 
   public void expandForest() {
-    Company.pay(getPrice());
-    lands.add(new Land());
-    stocks.addStock(lands.get(lands.size()).getStock());
+    if(Company.pay(getPrice())){
+      lands.add(new Land());
+      stocks.addStock(lands.get(lands.size()).getStock());
+    }
+
   }
 
   public ArrayList<Land> getLands() {
