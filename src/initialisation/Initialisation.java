@@ -65,18 +65,18 @@ public class Initialisation {
         Stock initialFinalStock = new Stock();
         this.machines = machines ;
         Company.init(
-                "Test company",
-                "Théo bien entendu le boss",
-                "Bengladesh",
+                "Engineer Inc.",
+                "Théo",
+                "France",
 
                 // Here we create the customer list
                 new Customer[]{
-                        new Customer("Customer1"),
-                        new Customer("Customer2"),
-                        new Customer("Customer3"),
-                        new Customer("Customer4"),
-                        new Customer("Customer5"),
-                        new Customer("Customer6")
+                        new Customer("Bertrand"),
+                        new Customer("Jacques"),
+                        new Customer("Thomas"),
+                        new Customer("Lisa"),
+                        new Customer("Alicia"),
+                        new Customer("Elsa")
                 },
                 150000,
                 initialFinalStock
