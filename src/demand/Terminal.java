@@ -153,8 +153,8 @@ public abstract class Terminal implements PurchaseUpgrade, Runnable {
      * @return true : demand completed, false : demand cannot be completed
      */
     protected boolean completeDemand(Demand demand) {
-        if (demand.getState() == DemandState.ACCEPTED && Company.getFinalStock().getCurrentCapacity() >= demand.getQuantity()) {
-            Company.getFinalStock().removeWood(demand.getQuantity());
+        if (demand.getState() == DemandState.ACCEPTED && Company.getFinalStockCategory().getCurrentCapacity() >= demand.getQuantity()) {
+            Company.getFinalStockCategory().removeWood(demand.getQuantity());
             demand.setState(DemandState.COMPLETED);
             Company.pay(demand.getPrice());
             return true;
