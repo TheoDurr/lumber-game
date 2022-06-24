@@ -35,10 +35,13 @@ public class Initialisation {
 
     // Employee categories
     public EmployeeCategory wcc = new WoodcutterCategory(forest);
-    public EmployeeCategory planters = new PlanterCategory(forest);
+    public EmployeeCategory planters = new PlanterCategory();
     public DriverCategory truckDrivers = new DriverCategory(landStocks, inputMachineStocks);
     public DriverCategory forkliftDrivers = new DriverCategory(outputMachineStocks, commandStocks);
-    public MarketingManager marketingManager = new MarketingManager(100, 100, website, mobileApp);
+    public MarketingManager marketingManager = new MarketingManager(100,100, website, mobileApp);
+
+
+
 
 
     // Vehicle categories
@@ -49,13 +52,18 @@ public class Initialisation {
     public MachineCategory machines = new MachineCategory();
 
 
+
+
+
+
     // Start threads
     // TODO Initialise all categories
-    public Initialisation() {
+    public Initialisation(){
         //== Example of company creation (everything is static)
         //FIXME: these information are placeholders for now.
 
-        this.machines = machines;
+        Stock initialFinalStock = new Stock();
+        this.machines = machines ;
         Company.init(
                 "Test company",
                 "Théo bien entendu le boss",
@@ -70,7 +78,8 @@ public class Initialisation {
                         new Customer("Customer5"),
                         new Customer("Customer6")
                 },
-                150000
+                150000,
+                initialFinalStock
         );
 
         //== Terminals creation
@@ -105,6 +114,8 @@ public class Initialisation {
         System.out.println(mobileApp);
 
 
+
+
         //We add two wc to the land
         wcc.buy();
         wcc.buy();
@@ -131,7 +142,7 @@ public class Initialisation {
         Vehicle truck1 = new Truck();
 
 
-        Driver truckDriver1 = new Driver(forest.getStockCategory(), inputMachineStocks, truck1, 1);
+        Driver truckDriver1 = new Driver(forest.getStockCategory(), inputMachineStocks, truck1,1);
         truckDrivers.addDriver(truck1);
         truckDrivers.start();
 
@@ -152,7 +163,7 @@ public class Initialisation {
         commandStocks = new StockCategory(commandStock);
         Vehicle forklift1 = new Forklift();
 
-        Driver forkliftDriver1 = new Driver(outputMachineStocks, commandStocks, forklift1, 1);
+        Driver forkliftDriver1 = new Driver(outputMachineStocks, commandStocks, forklift1,1);
         forkliftDrivers.addDriver(forklift1);
         forkliftDrivers.start();
 
@@ -172,12 +183,12 @@ public class Initialisation {
 
         // Display for test purposes
         while (true) {
-/*            System.out.println(">>>>>>");
+            System.out.println(">>>>>>");
             System.out.println("Stock terrain number of trunks : " + forest.getStock(0).getCurrentCapacity());
             System.out.println("Stock machine Input number of trunks : " + machineInputStock.getCurrentCapacity());
             System.out.println("Stock machine Output number of planks : " + machineOutputStock.getCurrentCapacity());
             System.out.println("Stock command number of planks : " + commandStock.getCurrentCapacity());
-            System.out.println("<<<<<<<");*/
+            System.out.println("<<<<<<<");
 
             try {
                 Thread.sleep(2000);
