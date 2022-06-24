@@ -1,8 +1,6 @@
 package employee;
 
-import terrain.Emplacement;
-import terrain.EmplacementType;
-import terrain.Land;
+import terrain.*;
 import wood.Wood;
 import java.util.List;
 import java.util.Random;
@@ -22,8 +20,7 @@ public class Woodcutter extends Employee implements Runnable {
   private int efficiency;
 
   //Land on which the woodcutter work
-  private
-  Land land;
+  private Land land;
 
   //Specific emplacement on which the woodcutter is either cutting a tree or waiting for work
   private Emplacement emplacement;
@@ -37,6 +34,12 @@ public class Woodcutter extends Employee implements Runnable {
     this.setSalary(statGenerator.nextFloat()*500+1200);
     this.curSpeed = baseSpeed + speedGrowth*level;
     this.efficiency = statGenerator.nextInt(10);
+  }
+
+  public Woodcutter(String name, int level, Land land){
+    this(name,level);
+    this.land = land;
+    emplacement = land.getRestEmplacement();
   }
 
   public void levelUp(int lvl) {

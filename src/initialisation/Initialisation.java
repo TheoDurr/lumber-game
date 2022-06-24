@@ -20,7 +20,8 @@ public class Initialisation {
 
 
     // List of all categories in the game
-    public WoodcutterCategory wcc = new WoodcutterCategory();
+    public Forest forest = new Forest();
+    public EmployeeCategory wcc = new WoodcutterCategory(forest);
     public EmployeeCategory planters = new PlanterCategory();
     public EmployeeCategory truckDrivers = new DriverCategory();
     public EmployeeCategory forkliftDrivers = new DriverCategory();
@@ -97,11 +98,9 @@ public class Initialisation {
         System.out.println(mobileApp);
 
 
-        //We create a new land with 2 woodcutters on it
-        Land land = new Land();
+        //We add two
         wcc.buy();
         wcc.buy();
-        wcc.setLand(land);
         wcc.startWorking();
 
 
@@ -116,14 +115,14 @@ public class Initialisation {
             endingWoodTestList.add(new Wood());
         }
 
-        land.getStock().addWood(startingWoodTestList);
+        forest.getStock(0).addWood(startingWoodTestList);
         machineInputStock.addWood(endingWoodTestList);
 
 
         //== Vehicle part from forest to machine
         Vehicle truck1 = new Truck();
 
-        Employee truckDriver1 = new Driver(land.getStock(), machineInputStock, truck1,1);
+        Employee truckDriver1 = new Driver(forest.getStock(0), machineInputStock, truck1,1);
         truckDrivers.addEmployee(truckDriver1);
         truckDrivers.start();
 
@@ -154,7 +153,7 @@ public class Initialisation {
         // Display for test purposes
         while (true) {
             System.out.println(">>>>>>");
-            System.out.println("Stock terrain number of trunks : " + land.getStock().getCurrentCapacity());
+            System.out.println("Stock terrain number of trunks : " + forest.getStock(0).getCurrentCapacity());
             System.out.println("Stock machine Input number of trunks : " + machineInputStock.getCurrentCapacity());
             System.out.println("Stock machine Output number of planks : " + machineOutputStock.getCurrentCapacity());
             System.out.println("Stock command number of planks : " + commandStock.getCurrentCapacity());
