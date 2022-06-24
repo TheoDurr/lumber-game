@@ -81,6 +81,15 @@ public class Stock {
         List<Wood> woodToRemove = new ArrayList<Wood>();
 
         for(int i = 0 ; i < quantity && i < this.content.size(); i++){
+            while(this.isEmpty()){
+                try {
+                    wait();
+
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             woodToRemove.add(this.content.get(0));
             this.content.remove(0);
         }

@@ -66,6 +66,8 @@ public class WoodcutterCategory extends EmployeeCategory implements PurchaseUpgr
     public void buy() {
         Woodcutter wc = new Woodcutter(Integer.toString(employees.size()),level);
         Land landToSet = forest.getLandFewestWC();
+        System.out.println("2WoddcutterCat, forest land size : " + forest.getLands().size());
+
         landToSet.newWoodcutter();
         //We set the land with the fewest woodcutter on it
         wc.setLand(landToSet);

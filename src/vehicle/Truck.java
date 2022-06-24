@@ -1,4 +1,5 @@
 package vehicle;
+import employee.Driver;
 import terrain.Stock;
 import wood.Wood;
 
@@ -7,10 +8,12 @@ import java.util.List;
 
 public class Truck extends Vehicle {
 
+
     public Truck(){
         super();
         capacity = 10;
     }
+
 
     public void levelUp(int lvl){
         level++;

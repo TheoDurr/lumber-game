@@ -2,6 +2,7 @@ package employee;
 
 import company.Company;
 import terrain.Stock;
+import terrain.StockCategory;
 import vehicle.Vehicle;
 
 public class DriverCategory extends EmployeeCategory implements PurchaseUpgrade{
@@ -9,15 +10,19 @@ public class DriverCategory extends EmployeeCategory implements PurchaseUpgrade{
     private static final int PRICE_MULT = 100;
     private int level;
 
+    StockCategory inputStocks;
+    StockCategory outputStocks;
 
 
-    public DriverCategory() {
+    public DriverCategory(StockCategory inputStocks, StockCategory outputStocks) {
         super();
+        this.inputStocks = inputStocks;
+        this.outputStocks = outputStocks;
         level = 1;
     }
 
-    public void addDriver(Stock departureStock, Stock destinationStock, Vehicle vehicle){
-        Driver d = new Driver(departureStock, destinationStock, vehicle,level);
+    public void addDriver(Vehicle vehicle){
+        Driver d = new Driver(inputStocks, outputStocks, vehicle,level);
     }
 
     public float getSalary(){

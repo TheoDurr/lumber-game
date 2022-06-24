@@ -1,6 +1,5 @@
 package terrain;
 
-import terrain.Stock;
 import wood.TreeState;
 
 public class Land {

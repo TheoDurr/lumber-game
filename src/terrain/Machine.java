@@ -51,7 +51,6 @@ public class Machine extends Factory implements Runnable {
 
         while (true) {
             // Transform wood into plank if there is enough wood in input stock and not too much in output
-
             transformWoodToPlank(inputStock.removeWood(1).get(0));
 
 

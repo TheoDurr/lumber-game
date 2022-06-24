@@ -33,6 +33,7 @@ public class MarketingManager extends Employee implements PurchaseUpgrade {
 
     public float getMaintenanceCost() {
         return maintenanceCost;
+    }
 
     private void levelUp(int lvl) {
         level += lvl;
