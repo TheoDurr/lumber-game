@@ -50,7 +50,7 @@ public final class Company {
     }
 
     public static void payInPlanks(int amountInPlank) {
-        nbPlank -= amountInPlank;
+        finalStocks.sendWoodToCommand(amountInPlank);
     }
 
     public static String getName() {

@@ -28,7 +28,7 @@ public class Initialisation {
     MobileApp mobileApp = MobileApp.getInstance();
 
     // Stock categories
-    public StockCategory landStocks = new StockCategory(firstLand.getStock());
+    public StockCategory forestStocks = forest.getStockCategory();
     public StockCategory inputMachineStocks;
     public StockCategory outputMachineStocks;
     public StockCategory commandStocks;
@@ -36,7 +36,7 @@ public class Initialisation {
     // Employee categories
     public EmployeeCategory wcc = new WoodcutterCategory(forest);
     public EmployeeCategory planters = new PlanterCategory(forest);
-    public DriverCategory truckDrivers = new DriverCategory(landStocks, inputMachineStocks);
+    public DriverCategory truckDrivers = new DriverCategory(forestStocks, inputMachineStocks);
     public DriverCategory forkliftDrivers = new DriverCategory(outputMachineStocks, commandStocks);
     public MarketingManager marketingManager = new MarketingManager(100,100, website, mobileApp);
 
@@ -45,7 +45,7 @@ public class Initialisation {
 
 
     // Vehicle categories
-    public VehicleCategory trucks = new VehicleCategory(landStocks, inputMachineStocks, truckDrivers);
+    public VehicleCategory trucks = new VehicleCategory(forestStocks, inputMachineStocks, truckDrivers);
     public VehicleCategory forklifts = new VehicleCategory(outputMachineStocks, commandStocks, forkliftDrivers);
 
 
@@ -160,7 +160,7 @@ public class Initialisation {
 
         //== Add one forklift to forkliftCategory
         Stock commandStock = new Stock();
-        commandStocks = new StockCategory(commandStock);
+        commandStocks = Company.getFinalStockCategory();
         Vehicle forklift1 = new Forklift();
 
         Driver forkliftDriver1 = new Driver(outputMachineStocks, commandStocks, forklift1,1);

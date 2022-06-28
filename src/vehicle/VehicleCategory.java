@@ -37,7 +37,7 @@ public class VehicleCategory {
     }
 
     public void upgrade() {
-        if(Company.pay(estimatePrice(){
+        if(Company.pay(estimatePrice())){
             level++;
 
         }

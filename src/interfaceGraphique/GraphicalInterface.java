@@ -331,7 +331,7 @@ public class GraphicalInterface extends JFrame implements Runnable {
         upgradeEarthStock.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                init.landStocks.upgrade();
+                init.forestStocks.upgrade();
             }
         });
         upgradeBfMachineStock = newUpgradeButton(1305, 400);
@@ -641,7 +641,7 @@ public class GraphicalInterface extends JFrame implements Runnable {
 
 
             //Stock
-            partOverlay(0, earthStockOverlay).setText(init.landStocks.getCurrentCapacity() + " / " + init.landStocks.getMaxCapacity());
+            partOverlay(0, earthStockOverlay).setText(init.forestStocks.getCurrentCapacity() + " / " + init.forestStocks.getMaxCapacity());
 
             partOverlay(0, bfMachineStockOverlay).setText(init.inputMachineStocks.getCurrentCapacity() + " / " + init.inputMachineStocks.getMaxCapacity());
 
@@ -650,7 +650,7 @@ public class GraphicalInterface extends JFrame implements Runnable {
             partOverlay(0, commandStockOverlay).setText(init.commandStocks.getCurrentCapacity() + " / " + init.commandStocks.getMaxCapacity());
 
 
-            upgradeEarthStock.setText(init.landStocks.estimatePrice() + " G");
+            upgradeEarthStock.setText(init.forestStocks.estimatePrice() + " G");
             upgradeBfMachineStock.setText(init.inputMachineStocks.estimatePrice() + " G");
             upgradeAftMachineStock.setText(init.outputMachineStocks.estimatePrice() + " G");
             upgradeCommandStock.setText(init.commandStocks.estimatePrice() + " G");

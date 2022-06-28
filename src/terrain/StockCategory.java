@@ -109,5 +109,12 @@ public class StockCategory implements PurchaseUpgrade {
         }
         return returnList;
     }
+
+    public void sendWoodToCommand(int quantity){
+        Iterator<Stock> it = stocks.iterator();
+        while(quantity>0 && it.hasNext()){
+            quantity -= it.next().sendWoodToCommand(quantity);
+        }
+    }
 }
 

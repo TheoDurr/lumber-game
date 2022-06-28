@@ -97,6 +97,14 @@ public class Stock {
         return woodToRemove;
     }
 
+    public int sendWoodToCommand(int nbOfTree){
+        int i;
+        for(i = 0 ; i <nbOfTree && i <getCurrentCapacity(); i++){
+            this.content.remove(0);
+        }
+        synchronized (this){notifyAll();}
+        return i;
+    }
 
     public String toString(){
         String str = content.size()+"/"+maxCapacity+"\n";
@@ -111,5 +119,8 @@ public class Stock {
     public void levelUp(int lvl) {
         this.level += lvl;
         maxCapacity += Math.round(this.level/3);
+        synchronized (this){
+            notifyAll();
+        }
     }
 }
